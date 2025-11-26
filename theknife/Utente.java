@@ -9,7 +9,7 @@ private  String username;
 private String mail;
 private String password;
 private String ruolo;
-public Utente( String nome, String cognome, String mail, String password ){
+public Utente( String nome, String cognome, String mail, String password, String domicilio, String username, String ruolo){
     this.nome=nome;
     this.cognome=cognome;
     this.domicilio=domicilio;
