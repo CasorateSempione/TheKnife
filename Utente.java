@@ -1,6 +1,4 @@
 package theknife;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public abstract  class  Utente {
@@ -24,8 +22,18 @@ public Utente( String nome, String cognome, String mail, String password ){
 public String getnome(){
     return nome;
 }
-public String 
-public String 
-public String 
-public String 
+public String getcognome(){
+    return cognome;
+
+}
+public String getdomicilio(){
+    return domicilio;
+}  
+
+public String getusername(){
+    return username;
+} 
+public String getmail(){
+    return mail;
+}
 }
