@@ -5,7 +5,7 @@ public abstract  class  Utente {
 private String nome;
 private String cognome;
 private String domicilio;
-private  String username;
+private String username;
 private String mail;
 private String password;
 private String ruolo;

@@ -1,4 +1,4 @@
-package TheKnife;
+package theknife;
 
 public class Ristoratore extends Utente {
     
@@ -12,12 +12,13 @@ public class Ristoratore extends Utente {
     private boolean prenotazioneOnline;
     private String tipoCucina;
 
-    public Ristoratore(int id, String nome, String mail, String password,
+    public Ristoratore(String nome, String cognome, String domicilio, String mail,
+                    String password, String username, String ruolo,
                        String nazione, String citta, String indirizzo,
                        double latitudine, double longitudine, double fasciaPrezzo,
                        boolean delivery, boolean prenotazioneOnline, String tipoCucina) {
         
-        super(id, nome, mail, password);
+        super( nome, cognome, password, domicilio, username, mail, ruolo);
         
         this.nazione = nazione;
         this.citta = citta;
