@@ -16,6 +16,8 @@ public List ristorantePreferiti(){
     return ristorantiPreferiti;
 
 }
+public void setRistorantiPreferiti(List<Ristorante> ristorantiPreferiti){
+    this.ristorantiPreferiti=ristorantiPreferiti;   
 
 }
 
