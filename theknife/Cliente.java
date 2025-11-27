@@ -19,5 +19,6 @@ public List ristorantePreferiti(){
 public void setRistorantiPreferiti(List<Ristorante> ristorantiPreferiti){
     this.ristorantiPreferiti=ristorantiPreferiti;   
 
+} 
 }
 
