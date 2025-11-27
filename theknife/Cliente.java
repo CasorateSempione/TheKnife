@@ -1,5 +1,5 @@
 package theknife;
 
-public class Cliente {
+public class Cliente extends Utente{
     
 }

@@ -1,6 +1,10 @@
 package theknife;
 
-public class Ristoratore extends Utente {
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Ristorante extends Utente {
     
     private String nazione;
     private String citta;
@@ -11,8 +15,9 @@ public class Ristoratore extends Utente {
     private boolean delivery;
     private boolean prenotazioneOnline;
     private String tipoCucina;
+    private List<Recensione> recensioni= new ArrayList<>();
 
-    public Ristoratore(String nome, String cognome, String domicilio, String mail,
+    public Ristorante(String nome, String cognome, String domicilio, String mail,
                     String password, String username, String ruolo,
                        String nazione, String citta, String indirizzo,
                        double latitudine, double longitudine, double fasciaPrezzo,
