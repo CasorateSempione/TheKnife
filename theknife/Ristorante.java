@@ -35,4 +35,14 @@ public class Ristorante extends Utente {
         this.prenotazioneOnline = prenotazioneOnline;
         this.tipoCucina = tipoCucina;
     }
-}
+
+    public String getNazione() { return nazione; }
+    public String getCitta() { return citta; }
+    public String getIndirizzo() { return indirizzo; }
+    public Double getLatitudine() { return latitudine; }
+    public Double getLongitudine() { return longitudine; }
+    public double getFasciaPrezzo() { return fasciaPrezzo; }
+    public boolean isDelivery() { return delivery; }
+    public boolean isPrenotazioneOnline() { return prenotazioneOnline; }
+    public String getTipoCucina() { return tipoCucina; }
+}   public List<Recensione> getRecensioni() {return recensioni; }
