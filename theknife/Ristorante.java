@@ -1,6 +1,5 @@
 package theknife;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class Ristorante extends Utente {
     private boolean delivery;
     private boolean prenotazioneOnline;
     private String tipoCucina;
-    private List<Recensione> recensioni= new ArrayList<>();
+    private List<Recensioni> recensioni= new ArrayList<>();
 
     public Ristorante(String nome, String cognome, String domicilio, String mail,
                     String password, String username, String ruolo,
@@ -45,4 +44,21 @@ public class Ristorante extends Utente {
     public boolean isDelivery() { return delivery; }
     public boolean isPrenotazioneOnline() { return prenotazioneOnline; }
     public String getTipoCucina() { return tipoCucina; }
-}   public List<Recensione> getRecensioni() {return recensioni; }
+     public List<Recensioni> getRecensioni() {return recensioni; }
+        public void AddRecensione(Recensioni r){
+            this.recensioni.add(r);
+        }   
+        public void removeRecensione(Recensioni r){
+            this.recensioni.remove(r);
+        }
+        public double calcolaValutazioneMedia(){
+            if (recensioni.isEmpty()) {
+                return 0.0;
+            }
+            int sommaStelle = 0;
+            for (Recensioni recensione : recensioni) {
+                sommaStelle += recensione.getNumeroStelle();
+            }
+            return (double) sommaStelle / recensioni.size();
+        }
+} 
