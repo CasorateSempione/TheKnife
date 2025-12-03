@@ -69,8 +69,20 @@ public String visualizzaRecensioniDettaglio(Ristorante r) {
         ));
     }
     return sb.toString();
+
 }
 
+public boolean rispondiARecensione(Ristorante r, Recensione recensione, String testoRisposta) {
+   if (r == null || recensione == null || testoRisposta == null) return false;
+
+   if (!r.getRecensioni().contains(recensione)) return false;
+
+   if (recensione.getRispostaRistoratore() != null && !recensione.getRispostaRistoratore().isBlank()) return false;
+   
+   recensione.rispondi(testoRisposta.trim()); // trim toglie spazi inutili 
+   return true;
+
+}
 
    
 }
