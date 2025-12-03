@@ -12,7 +12,7 @@ public class Cliente extends Utente{
                      String password, String username, String ruolo) {
          super( nome, cognome, domicilio, mail, password, username, ruolo);
     }       
-public List ristorantePreferiti(){
+public  List<Ristorante> ristorantePreferiti(){
     return ristorantiPreferiti;
 
 }
