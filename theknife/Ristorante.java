@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Ristorante{
     
+    private String Id;
+    private String nome;
     private String nazione;
     private String citta;
     private String indirizzo;
@@ -16,10 +18,11 @@ public class Ristorante{
     private String tipoCucina;
     private List<Recensioni> recensioni= new ArrayList<>();
 
-    public Ristorante(String nome,String nazione, String citta, String indirizzo,
+    public Ristorante(String Id,String nome,String nazione, String citta, String indirizzo,
                        double latitudine, double longitudine, double fasciaPrezzo,
                        boolean delivery, boolean prenotazioneOnline, String tipoCucina) {
-        
+        this.Id=Id;
+        this.nome = nome;
         this.nazione = nazione;
         this.citta = citta;
         this.indirizzo = indirizzo;
@@ -32,6 +35,8 @@ public class Ristorante{
     }
 
     public String getNazione() { return nazione; }
+    public String getnome() { return nome; }
+    public String getId() { return Id; }
     public String getCitta() { return citta; }
     public String getIndirizzo() { return indirizzo; }
     public Double getLatitudine() { return latitudine; }
