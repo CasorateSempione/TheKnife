@@ -46,11 +46,11 @@ public class SalvataggioRistorante {
                 } else {
                     String[] t = line.split(";");
                     Recensioni rec = new Recensioni(
-                            t[0], t[1], t[2],
-                            Integer.parseInt(t[3]),
-                            t[4],
-                            t.length > 5 ? t[5] : "",
-                            t.length > 6 ? t[6] : ""
+                            t[0], t[1], t[2],t[3],
+                            Integer.parseInt(t[4]),
+                            t[5],
+                            t.length > 6 ? t[6] : "",
+                            t.length > 7 ? t[7] : ""
                     );
                     current.addRecensione(rec);
                 }
