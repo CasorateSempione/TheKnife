@@ -57,7 +57,7 @@ public String riepilogoRecensioni() {
 
 public String visualizzaRecensioniDettaglio(Ristorante r) {
     if (r == null) return "Errore: ristorante nullo.";
-    StringBuilder sb = new StringBuilder("Recensioni per: " + r.getNome() + "\n");
+    StringBuilder sb = new StringBuilder("Recensioni per: " + r.getnome() + "\n");
     int idx = 1;
     for (recensione rec : r.getrecensioni()) {
         String risposta = (rec.getRispostaRistoratore() == null || rec.getRispostaRistoratore().isBlank())

@@ -3,7 +3,7 @@ package theknife;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ristorante extends Utente {
+public class Ristorante{
     
     private String nazione;
     private String citta;
@@ -16,13 +16,9 @@ public class Ristorante extends Utente {
     private String tipoCucina;
     private List<Recensioni> recensioni= new ArrayList<>();
 
-    public Ristorante(String nome, String cognome, String domicilio, String mail,
-                    String password, String username, String ruolo,
-                       String nazione, String citta, String indirizzo,
+    public Ristorante(String nome,String nazione, String citta, String indirizzo,
                        double latitudine, double longitudine, double fasciaPrezzo,
                        boolean delivery, boolean prenotazioneOnline, String tipoCucina) {
-        
-        super( nome, cognome, password, domicilio, username, mail, ruolo);
         
         this.nazione = nazione;
         this.citta = citta;
