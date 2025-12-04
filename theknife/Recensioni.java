@@ -10,15 +10,17 @@ public class Recensioni {
     private Risposta risposta;
     private String rispostaAutore;
     private String rispostaTesto;
+    private String ristostaristoratore;
     
 
- public Recensioni(String id, String ristoranteid, String Autore, int numeroStelle, String commento, String rispostaAutore, String rispostaTesto){
+ public Recensioni( String ristostaristoratore,String id, String ristoranteid, String Autore, int numeroStelle, String commento, String rispostaAutore, String rispostaTesto){
      this.id=id;
      this.ristoranteid=ristoranteid;
      this.Autore=Autore;
      this.numeroStelle=numeroStelle;
      this.commento=commento;
      this.rispostaAutore = rispostaAutore;
+    this.ristostaristoratore=ristostaristoratore;
      this.rispostaTesto = rispostaTesto;
         if (rispostaAutore != null && rispostaTesto != null){
             this.risposta=new Risposta(rispostaAutore, rispostaTesto);
@@ -52,7 +54,9 @@ public class Recensioni {
     public void risposta(Risposta risposta){
         this.risposta=risposta;
     }
-
+    public String getRiristoratore(){
+        return ristostaristoratore;
+    }
 public String getRispostaTesto() {
     return rispostaTesto;
 }

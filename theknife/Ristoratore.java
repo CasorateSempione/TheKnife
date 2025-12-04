@@ -7,9 +7,10 @@ import java.util.List;
 public class Ristoratore extends Utente  {
     private final List<Ristorante> ristorantigestiti = new ArrayList<>();
     
-    public Ristoratore(String nome, String cognome, String mail, String username, String password, String domicilio, String ruolo) {
+    
+    public Ristoratore( String rispostaRistoratore,String nome, String cognome, String mail, String username, String password, String domicilio, String ruolo) {
         super(nome, cognome, mail, username, password,domicilio,ruolo );
-    }
+        
 
 public boolean aggiungiRistorante(Ristorante r) {
     if (r == null) {
@@ -18,14 +19,14 @@ public boolean aggiungiRistorante(Ristorante r) {
     }
     
     for (Ristorante esistente : ristorantigestiti) {
-        if (esistente.getNome().equalsIgnoreCase(r.getNome()) &&
+        if (esistente.getnome().equalsIgnoreCase(r.getnome()) &&
             esistente.getCitta().equalsIgnoreCase(r.getCitta())) {
-            System.out.println("Il ristorante '" + r.getNome() + "' a " + r.getCitta() + " è già presente.");
+            System.out.println("Il ristorante '" + r.getnome() + "' a " + r.getCitta() + " è già presente.");
             return false;
         }
     }
     ristorantigestiti.add(r);
-    System.out.println("Ristorante '" + r.getNome() + "' aggiunto con successo!");
+    System.out.println("Ristorante '" + r.getnome() + "' aggiunto con successo!");
     return true;
 }
 public boolean rimuoviRistorante(Ristorante r) {
@@ -34,13 +35,14 @@ public boolean rimuoviRistorante(Ristorante r) {
         return false;
     }
     if (!ristorantigestiti.contains(r)) {
-        System.out.println("Il ristorante '" + r.getNome() + "' non è presente nella lista.");
+        System.out.println("Il ristorante '" + r.getnome() + "' non è presente nella lista.");
         return false;
     }
     ristorantigestiti.remove(r);
-    System.out.println("Ristorante '" + r.getNome() + "' rimosso con successo!");
+    System.out.println("Ristorante '" + r.getnome() + "' rimosso con successo!");
     return true;
 }
+
 
 public String riepilogoRecensioni() {
     StringBuilder sb = new StringBuilder();
@@ -49,7 +51,7 @@ public String riepilogoRecensioni() {
         int count = r.getRecensioni().size();
         sb.append(String.format(
             "Ristorante: %s | Recensioni: %d | Media stelle: %.2f%n",
-            r.getNome(), count, media
+            r.getnome(), count, media
         ));
     }
     return sb.toString();
@@ -60,7 +62,7 @@ public String visualizzaRecensioniDettaglio(Ristorante r) {
     StringBuilder sb = new StringBuilder("Recensioni per: " + r.getnome() + "\n");
     int idx = 1;
     for (Recensioni rec : r.getRecensioni()) {
-        String risposta = (rec.getRispostaRistoratore() == null || rec.getRispostaRistoratore().isBlank())
+        String risposta = (rec.getRiristoratore() == null || rec.getrispostaRistoratore().isBlank())
                 ? "(nessuna risposta)"
                 : rec.getRispostaRistoratore();
         sb.append(String.format(

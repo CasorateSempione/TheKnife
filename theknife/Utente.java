@@ -1,7 +1,10 @@
 package theknife;
 
+import java.util.List;
+
 
 public abstract  class  Utente {
+  private  List<Utente> utenti;
 private String nome;
 private String cognome;
 private String domicilio;
