@@ -30,23 +30,23 @@ public class TheKnife {
 
         //creazione ristorante
         Ristorante ristorante = new Ristorante(
-    "R001",                      // Id del ristorante
-    "Burger di Cicciogamer89",   // nome
-    "Italia",                    // nazione
-    "Roma",                      // città
-    "Via dei Panini 89",         // indirizzo
-    41.9028,                     // latitudine
-    12.4964,                     // longitudine
-    3.0,                         // fasciaPrezzo (double)
-    true,                        // delivery
-    true,                        // prenotazioneOnline
-    "Fast Food"                  // tipoCucina
+            "R001",                      // Id del ristorante
+            "Burger di Cicciogamer89",   // nome
+            "Italia",                    // nazione
+            "Roma",                      // città
+            "Via dei Panini 89",         // indirizzo
+            41.9028,                     // latitudine
+            12.4964,                     // longitudine
+            3.0,                         // fasciaPrezzo (double)
+            true,                        // delivery
+            true,                        // prenotazioneOnline
+            "Fast Food"                  // tipoCucina
 );
 
-    };
+    
 
         //  Aggiunta del ristorante al ristoratore
-        Ristoratore.aggiungiRistorante(ristorante);
+        ristoratore.aggiungiRistorante(ristorante);
 
         //  Stampa dei dati principali usando i getter
         System.out.println("\n=== Profilo cliente ===");
