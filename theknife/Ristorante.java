@@ -41,7 +41,7 @@ public class Ristorante{
     public boolean isPrenotazioneOnline() { return prenotazioneOnline; }
     public String getTipoCucina() { return tipoCucina; }
      public List<Recensioni> getRecensioni() {return recensioni; }
-        public void AddRecensione(Recensioni r){
+        public void addRecensione(Recensioni r){
             this.recensioni.add(r);
         }   
         public void removeRecensione(Recensioni r){

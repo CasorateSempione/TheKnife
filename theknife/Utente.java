@@ -19,7 +19,7 @@ public Utente( String nome, String cognome, String mail, String password, String
     this.ruolo=ruolo;
 }
 
-public String getnome(){
+public String getNome(){
     return nome;
 }
 public String getcognome(){

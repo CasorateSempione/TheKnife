@@ -45,4 +45,15 @@ public class Recensioni {
     public void risposta(Risposta risposta){
         this.risposta=risposta;
     }
+
+    private String rispostaRistoratore;
+
+public String getRispostaRistoratore() {
+    return rispostaRistoratore;
+}
+
+public void rispondi(String testo) {
+    this.rispostaRistoratore = testo;
+}
+
 } 
