@@ -8,7 +8,7 @@ public class TheKnife {
 
         //  Creazione del cliente (Carlo)
         Cliente cliente = new Cliente(
-            "Carlo",            // nome
+            nome: "Carlo",            // nome
             "Studente",         // cognome
             "Busto Arsizio",    // domicilio
             "carlo@example.com",// mail
@@ -19,7 +19,8 @@ public class TheKnife {
 
         // Creazione del ristoratore (Cicciogamer89)
         Ristoratore ristoratore = new Ristoratore(
-            "Cicciogamer",        // nome
+            
+            nome: "Cicciogamer",        // nome
             "89",                 // cognome
             "ciccio@example.com", // mail
             "cicciogamer89",      // username
