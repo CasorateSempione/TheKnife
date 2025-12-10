@@ -10,7 +10,7 @@ public class TheKnife {
         boolean running = true;
 
         while (running) {
-            System.out.println("Benvenuto in The Knife!");
+            System.out.println("\nBenvenuto in The Knife!");
             System.out.println("1) Login");
             System.out.println("2) Registrazione");
             System.out.println("3) Entra come Guest");
@@ -48,6 +48,7 @@ public class TheKnife {
       
                     private static void login() {
                         System.out.print("Username: ");
+                        
                 
                     }
                     private static void registrazione() {}

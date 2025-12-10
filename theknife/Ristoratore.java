@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ristoratore extends Utente {
-    int a;
+
 
     private final List<Ristorante> ristorantiGestiti = new ArrayList<>();
 
