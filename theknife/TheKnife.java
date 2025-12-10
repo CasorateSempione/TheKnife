@@ -3,12 +3,61 @@ package theknife;
 
 public class TheKnife {
     public static void main(String[] args) {
+        String scelta = "";
         // Messaggio iniziale
         System.out.println("Benvenuto in The Knife!");
+        boolean running = true;
 
-        //  Creazione del cliente (Carlo)
+        while (running) {
+            System.out.println("Benvenuto in The Knife!");
+            System.out.println("1) Login");
+            System.out.println("2) Registrazione");
+            System.out.println("3) Entra come Guest");
+            System.out.println("0) Esci");
+            System.out.print("Scelta: ");
+
+            switch (scelta) {
+                case "1":
+                    login();
+                    break;
+
+                case "2":
+                    registrazione();
+                    break;
+
+                case "3":
+                    usaComeGuest();
+                    break;
+
+                case "0":
+                    System.out.println("\nChiusura in corso...");
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("\n Scelta non valida. Riprova."); 
+  
+        }
+    }
+}
+     
+      
+      
+      
+      
+      
+                    private static void login() {}
+                    private static void registrazione() {}
+                    private static void usaComeGuest() {}
+      
+      
+      
+      
+      
+      
+        /* //  Creazione del cliente (Carlo)
         Cliente cliente = new Cliente(
-            nome: "Carlo",            // nome
+            "Carlo",            // nome
             "Studente",         // cognome
             "Busto Arsizio",    // domicilio
             "carlo@example.com",// mail
@@ -20,7 +69,7 @@ public class TheKnife {
         // Creazione del ristoratore (Cicciogamer89)
         Ristoratore ristoratore = new Ristoratore(
             
-            nome: "Cicciogamer",        // nome
+            "Cicciogamer",        // nome
             "89",                 // cognome
             "ciccio@example.com", // mail
             "cicciogamer89",      // username
@@ -73,9 +122,9 @@ public class TheKnife {
 
         // Chiusura
         System.out.println("\nSetup completato. Pronto per aggiungere recensioni e risposte!");
+         */
 
 
 
-}
 }
 

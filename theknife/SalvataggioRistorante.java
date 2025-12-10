@@ -6,11 +6,8 @@ import java.util.*;
 
 public class SalvataggioRistorante {
 
-    private String file;
+    private String file = "ristoranti.txt";
 
-    public SalvataggioRistorante(String file) {
-        this.file = file;
-    }
     private List<Ristorante> load() {
         List<Ristorante> lista = new ArrayList<>();
         Ristorante current = null;
@@ -84,8 +81,9 @@ public class SalvataggioRistorante {
                 for (Recensioni rec : r.getRecensioni()) {
                      bw.write("[RECENSIONE]\n");
                     bw.write(String.join(";",
-                            rec.getId(),
-                            rec.getRistoranteid(),
+                            rec.getRiristoratore(),
+                             rec.getId(),
+                             rec.getRistoranteid(),
                             rec.getAutore(),
                             "" + rec.getNumeroStelle(),
                             rec.getCommento(),

@@ -8,12 +8,12 @@ public class Recensioni {
     private int numeroStelle;
     private String commento;
     private Risposta risposta;
-    private String rispostaAutore;
-    private String rispostaTesto;
+    protected  String rispostaAutore;
+    protected  String rispostaTesto;
     private String ristostaristoratore;
     
 
- public Recensioni( String ristostaristoratore,String id, String ristoranteid, String Autore, int numeroStelle, String commento, String rispostaAutore, String rispostaTesto){
+ public Recensioni(String ristostaristoratore,String id, String ristoranteid, String Autore, int numeroStelle, String commento, String rispostaAutore, String rispostaTesto){
      this.id=id;
      this.ristoranteid=ristoranteid;
      this.Autore=Autore;
