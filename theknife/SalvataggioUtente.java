@@ -28,7 +28,7 @@ public class SalvataggioUtente {
                 if (ruolo.equals("cliente")) {
                     u = new Cliente(t[0], t[1], t[2], t[3], t[4], t[5],t[6]);
                 } else if (ruolo.equals("ristoratore")) {
-                    u = new Ristoratore(t[0], t[1], t[2], t[3], t[4], t[5], t[6],t[7]);
+                    u = new Ristoratore(t[0], t[1], t[2], t[3], t[4], t[5], t[6]);
                 } else {
                     System.out.println("Ruolo sconosciuto: " + ruolo);
                     continue;
