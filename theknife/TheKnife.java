@@ -46,7 +46,10 @@ public class TheKnife {
       
 
       
-                    private static void login() {}
+                    private static void login() {
+                        System.out.print("Username: ");
+                
+                    }
                     private static void registrazione() {}
                     private static void usaComeGuest() {}      
 
