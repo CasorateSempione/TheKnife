@@ -62,9 +62,9 @@ public String visualizzaRecensioniDettaglio(Ristorante r) {
     StringBuilder sb = new StringBuilder("Recensioni per: " + r.getnome() + "\n");
     int idx = 1;
     for (Recensioni rec : r.getRecensioni()) {
-        String risposta = (rec.getRiristoratore() == null || rec.getrispostaRistoratore().isBlank())
+        String risposta = (rec.getRiristoratore() == null || rec.getRiristoratore().isBlank())
                 ? "(nessuna risposta)"
-                : rec.getRispostaRistoratore();
+                : rec.getRiristoratore();
         sb.append(String.format(
             "%d) Stelle: %d | Testo: %s | Risposta: %s%n",
             idx++, rec.getNumeroStelle(), rec.getCommento(), risposta
