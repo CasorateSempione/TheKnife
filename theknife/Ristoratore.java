@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ristoratore extends Utente {
+    int a;
 
     private final List<Ristorante> ristorantiGestiti = new ArrayList<>();
 
@@ -41,6 +42,7 @@ public class Ristoratore extends Utente {
         if (r == null) {
             System.out.println("Errore: il ristorante non può essere nullo.");
             return false;
+
         }
 
         if (!ristorantiGestiti.contains(r)) {
