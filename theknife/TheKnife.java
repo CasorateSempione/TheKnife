@@ -26,20 +26,21 @@ public class TheKnife {
                     login();
                     break;
 
-                case "2":/* 
+                case "2":
                 Scanner sc = new Scanner (System.in);
                 System.out.println("1) Registrazione Ristorante");
                 System.out.println("2)Registrazione Utente");
                 int a=sc.nextInt(); 
                 if(a==1) {
-                    registrazioneRistorante();
+                    Ristorante nuovoRistorante=registrazioneRistorante();
                 } else if (a==2) {
-                    registrazioneUtente(); 
+                    Utente nuovoUtente=registrazioneUtente(); 
+                    Utente.load(nuovoUtente);
                 } else {
                     System.out.println("Errore: Valore non valido");
                 }
                     break;
-*/
+
                 case "3":
                    // usaComeGuest();
                     break;
@@ -72,7 +73,37 @@ public class TheKnife {
                         }
                     }
                     }
-                    private static void registrazioneUtente (String nome, String cognome, String mail, String password, String domicilio, String username) { 
+                    private static void registrazioneUtente () { 
+                    Scanner sc= new Scanner(System.in);
+                   
+                    System.out.println("Inserire nome"); 
+                    String nome= sc.nextLine();
+
+                    System.out.println("Inserire cognome"); 
+                    String cognome=sc.nextLine();
+
+                    System.out.println("Inserire domicilio ");
+                    String domicilio=sc.nextLine();
+                    
+                    System.out.println("Inserire username");
+                    String username=sc.nextLine();
+
+                    System.out.println("Inserire mail");
+                    String mail=sc.nextLine();
+                    
+                    System.out.println("Inserire Password");
+                    String Password=sc.nextLine();
+                    String ruolo= Utente;
+                     
+            
+                    return new Utente(ruolo, nome, cognome, mail, Password, domicilio, username);
+                    }
+
+                
+
+
+
+
 
 
 }                    }
