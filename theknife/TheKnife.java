@@ -1,9 +1,9 @@
 
 package theknife;
 
-import java.util.Scanner;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class TheKnife {
     private static Scanner sc=new Scanner(System.in);
@@ -26,7 +26,7 @@ public class TheKnife {
                     login();
                     break;
 
-                case "2":
+                case "2":/* 
                 Scanner sc = new Scanner (System.in);
                 System.out.println("1) Registrazione Ristorante");
                 System.out.println("2)Registrazione Utente");
@@ -39,9 +39,9 @@ public class TheKnife {
                     System.out.println("Errore: Valore non valido");
                 }
                     break;
-
+*/
                 case "3":
-                    usaComeGuest();
+                   // usaComeGuest();
                     break;
 
                 case "0":
@@ -76,7 +76,7 @@ public class TheKnife {
 
 
 }                    }
-                    private static void usaComeGuest() {}      
+                    //private static void usaComeGuest() {}      
 
-}
+
 
