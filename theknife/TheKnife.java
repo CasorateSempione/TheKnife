@@ -1,15 +1,11 @@
 
 package theknife;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Scanner;
 
-
 public class TheKnife {
-    private static Scanner sc = new Scanner(System.in);
-     private static List<Utente> utenti = new ArrayList<>();
-
     public static void main(String[] args) {
+        Scanner sc = new Scanner (System.in);
         String scelta = "";
         boolean running = true;
 
@@ -28,7 +24,17 @@ public class TheKnife {
                     break;
 
                 case "2":
-                    registrazione();
+                Scanner sc = new Scanner (System.in);
+                System.out.println("1) Registrazione Ristorante");
+                System.out.println("2)Registrazione Utente");
+                int a=sc.nextInt(); 
+                if(a==1) {
+                    registrazioneRistorante();
+                } else if (a==2) {
+                    registrazioneUtente(); 
+                } else {
+                    System.out.println("Errore: Valore non valido");
+                }
                     break;
 
                 case "3":
@@ -61,16 +67,8 @@ public class TheKnife {
                             if (u.getusername().equals(username) && u.getmail().equals(password)) {
                             trovato = u;
                         break;
-        
+        }
                         }
-                    }
-                    if(trovato == null){
-                        System.out.println("Credenziali Errate. Riprova.");
-                    } else {
-                        System.out.println("Login effettuato con successo. Benvenuto, " + trovato.getusername() + "!");
-                    }
-                    
-                }
                     private static void registrazione() 
                     {
                         
