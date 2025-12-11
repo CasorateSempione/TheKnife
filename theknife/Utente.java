@@ -12,14 +12,14 @@ private String username;
 private String mail;
 private String password;
 private String ruolo;
-public Utente( String ruolo, String nome, String cognome, String mail, String password, String domicilio, String username) {
+public Utente(String nome, String cognome, String domicilio, String mail, String password, String username,String ruolo){ 
     
     this.nome=nome;
     this.cognome=cognome;
     this.domicilio=domicilio;
-    this.username=username;
     this.mail=mail;
     this.password=password;
+    this.username=username;
     this.ruolo=ruolo;
 }
 
@@ -33,16 +33,17 @@ public String getcognome(){
 public String getdomicilio(){
     return domicilio;
 }  
-
-public String getusername(){
-    return username;
-} 
 public String getmail(){
     return mail;
 }
 public String getpassword(){
     return password;
 }
+
+public String getusername(){
+    return username;
+} 
+
 public String getruolo(){
     return ruolo;
 }

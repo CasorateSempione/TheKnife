@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class SalvataggioUtente {
-    private String file = "utenti.txt";
+    private String file = "C:\\Users\\Utente\\Desktop\\TheKnife\\data\\utente.txt";
 
     private List<Utente> load() {
         List<Utente> lista = new ArrayList<>();
@@ -48,9 +48,9 @@ public class SalvataggioUtente {
                 writer.write(String.join(";",
                         u.getNome(),
                         u.getcognome(),
+                        u.getdomicilio(),
                         u.getmail(),
                         u.getpassword(),
-                        u.getdomicilio(),
                         u.getusername(),
                         u.getruolo()
                         
@@ -72,6 +72,9 @@ public class SalvataggioUtente {
         List<Utente> lista = load();
         lista.removeIf(existing -> existing.getusername().equals(u.getusername()));
         save(lista);
+    }
+    public List<Utente> getTutti() {
+        return load();
     }
 }
 
