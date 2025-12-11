@@ -61,8 +61,16 @@ public class TheKnife {
                             if (u.getusername().equals(username) && u.getmail().equals(password)) {
                             trovato = u;
                         break;
-        }
+        
                         }
+                    }
+                    if(trovato == null){
+                        System.out.println("Credenziali Errate. Riprova.");
+                    } else {
+                        System.out.println("Login effettuato con successo. Benvenuto, " + trovato.getusername() + "!");
+                    }
+                    
+                }
                     private static void registrazione() 
                     {
                         
