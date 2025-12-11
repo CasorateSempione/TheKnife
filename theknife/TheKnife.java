@@ -1,14 +1,16 @@
-
 package theknife;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class TheKnife {
     private static Scanner sc=new Scanner(System.in);
     private static List<Utente> utenti=new ArrayList<>();
+    private static SalvataggioUtente fileutenti = new SalvataggioUtente();
     public static void main(String[] args) {
+        utenti = fileutenti.getTutti();
         String scelta = "";
         boolean running = true;
 
@@ -26,7 +28,7 @@ public class TheKnife {
                     login();
                     break;
 
-                case "2":
+                case "2":/* 
                 Scanner sc = new Scanner (System.in);
                 System.out.println("1) Registrazione Ristorante");
                 System.out.println("2)Registrazione Utente");
@@ -39,7 +41,7 @@ public class TheKnife {
                 } else {
                     System.out.println("Errore: Valore non valido");
                 }
-                    break;
+                    break;*/
 
                 case "3":
                    // usaComeGuest();
@@ -67,14 +69,24 @@ public class TheKnife {
                     String password = sc.nextLine();
                     Utente trovato = null;
                     for (Utente u : utenti) {
-                        if (u.getusername().equals(username) && u.getmail().equals(password)) {
+                         System.out.println("Username: " + u.getusername() + ", Password: " + u.getpassword());
+                        if (u.getusername().equals(username) && u.getpassword().equals(password)) {
                             trovato = u;
                             break;
                         }
                     }
-                    }
+                     if (trovato == null) {
+                         System.out.println("Credenziali errate");
+                             return;
+                        }else
+                            {
+                                System.out.println("\nBenvenuto " + trovato.getNome() + "!");
+                            }
+    }
+
+                    
                     private static void registrazioneUtente () { 
-                    Scanner sc= new Scanner(System.in);
+                    /*Scanner sc= new Scanner(System.in);
                    
                     System.out.println("Inserire nome"); 
                     String nome= sc.nextLine();
@@ -97,7 +109,7 @@ public class TheKnife {
                      
             
                     return new Utente(ruolo, nome, cognome, mail, Password, domicilio, username);
-                    }
+                    */}
 
                 
 
@@ -106,8 +118,6 @@ public class TheKnife {
 
 
 
-}                    }
+}                    
                     //private static void usaComeGuest() {}      
-
-
 
