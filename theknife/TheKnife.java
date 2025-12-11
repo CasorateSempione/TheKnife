@@ -1,11 +1,15 @@
 
 package theknife;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+
 public class TheKnife {
+    private static Scanner sc = new Scanner(System.in);
+     private static List<Utente> utenti = new ArrayList<>();
+
     public static void main(String[] args) {
-        Scanner sc = new Scanner (System.in);
         String scelta = "";
         boolean running = true;
 
@@ -48,10 +52,21 @@ public class TheKnife {
       
                     private static void login() {
                         System.out.print("Username: ");
+                        String username = sc.nextLine();
+                        System.out.print("Password: ");
+                        String password = sc.nextLine();
+                        Utente trovato = null;
+
+                        for (Utente u : utenti) {
+                            if (u.getusername().equals(username) && u.getmail().equals(password)) {
+                            trovato = u;
+                        break;
+        }
+                        }
+                    private static void registrazione() 
+                    {
                         
-                
                     }
-                    private static void registrazione() {}
                     private static void usaComeGuest() {}      
 
 }

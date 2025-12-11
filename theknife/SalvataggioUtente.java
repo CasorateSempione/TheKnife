@@ -53,6 +53,7 @@ public class SalvataggioUtente {
                         u.getdomicilio(),
                         u.getusername(),
                         u.getruolo()
+                        
                 ));
                 writer.newLine();
             }
