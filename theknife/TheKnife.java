@@ -71,6 +71,10 @@ public class TheKnife {
                             break;
                         }
                     }
+                    if (trovato == null) {
+                        System.out.println("Credenziali errate");
+                         return;
+                     } System.out.println("Benvenuto " + trovato.getNome()+ "!");
                     }
                     private static void registrazioneUtente (String nome, String cognome, String mail, String password, String domicilio, String username) { 
 
