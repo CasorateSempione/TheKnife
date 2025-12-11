@@ -1,3 +1,4 @@
+
 package theknife;
 
 import java.util.ArrayList;
@@ -5,17 +6,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class TheKnife {
-
-    private static Scanner sc = new Scanner(System.in);
-    private static List<Utente> utenti = new ArrayList<>();
-    private static SalvataggioUtente fileutenti = new SalvataggioUtente();
-
+    private static Scanner sc=new Scanner(System.in);
+    private static List<Utente> utenti=new ArrayList<>();
     public static void main(String[] args) {
-        utenti = fileutenti.getTutti();
-        System.out.println("Utenti caricati: " + utenti.size());
-        for (Utente u : utenti) {
-            System.out.println(u.getusername() + " - " + u.getruolo());
-        }
         String scelta = "";
         boolean running = true;
 
@@ -47,13 +40,9 @@ public class TheKnife {
                     System.out.println("Errore: Valore non valido");
                 }
                     break;
-<<<<<<< HEAD
-                 */
-=======
 
->>>>>>> a03a898b366d87b13bc492b73de50faff39847cc
                 case "3":
-                    // usaComeGuest();
+                   // usaComeGuest();
                     break;
 
                 case "0":
@@ -62,43 +51,11 @@ public class TheKnife {
                     break;
 
                 default:
-                    System.out.println("\n Scelta non valida. Riprova.");
-
-            }
+                    System.out.println("\n Scelta non valida. Riprova."); 
+  
         }
-    }
-
-    private static void login() {
-        System.out.print("Username: ");
-        String username = sc.nextLine();
-        System.out.print("Password: ");
-        String password = sc.nextLine();
-
-        Utente trovato = null;
-        for (Utente u : utenti) {
-            // Stampa debug per vedere che il for viene eseguito
-            System.out.println("Controllo utente: " + u.getusername());
-            if (u.getusername().equals(username) && u.getpassword().equals(password)) {
-                trovato = u;
-                break;
-            }
-        }
-
-        if (trovato == null) {
-            System.out.println("Credenziali errate");
-            return;
-        }
-
-        System.out.println("Benvenuto " + trovato.getNome() + "!");
-    }
-
-    private static void registrazioneUtente(String nome, String cognome, String mail, String password, String domicilio, String username) {
-
     }
 }
-<<<<<<< HEAD
-//private static void usaComeGuest() {}      
-=======
      
       
 
@@ -153,5 +110,4 @@ public class TheKnife {
                     //private static void usaComeGuest() {}      
 
 
->>>>>>> a03a898b366d87b13bc492b73de50faff39847cc
 
