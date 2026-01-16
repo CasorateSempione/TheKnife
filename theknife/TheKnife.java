@@ -28,20 +28,22 @@ public class TheKnife {
                     login();
                     break;
 
-                case "2":/* 
+                case "2":
                 Scanner sc = new Scanner (System.in);
-                System.out.println("1) Registrazione Ristorante");
-                System.out.println("2)Registrazione Utente");
+                SalvataggioUtente salvataggio=new SalvataggioUtente();
+                System.out.println("1) Registrazione Ristoratore");
+                System.out.println("2)Registrazione Cliente");
                 int a=sc.nextInt(); 
                 if(a==1) {
-                    Ristorante nuovoRistorante=registrazioneRistorante();
+            Ristoratore S1=Ristoratore.registrazioneRistoratore();
+      salvataggio.aggiungiUtente(S1);
                 } else if (a==2) {
-                    Utente nuovoUtente=registrazioneUtente(); 
-                    Utente.load(nuovoUtente);
+       Cliente S2= Cliente.registrazionecliente();
+                  salvataggio.aggiungiUtente(S2);
                 } else {
                     System.out.println("Errore: Valore non valido");
                 }
-                    break;*/
+                    break;
 
                 case "3":
                    // usaComeGuest();

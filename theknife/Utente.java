@@ -3,7 +3,7 @@ package theknife;
 import java.util.List;
 
 
-public abstract  class  Utente {
+public abstract class Utente {
   private  List<Utente> utenti;
 private String nome;
 private String cognome;
@@ -12,7 +12,7 @@ private String username;
 private String mail;
 private String password;
 private String ruolo;
-public Utente(String nome, String cognome, String domicilio, String mail, String password, String username,String ruolo){ 
+public Utente(String nome, String cognome, String domicilio, String mail, String password, String username, String ruolo) {
     
     this.nome=nome;
     this.cognome=cognome;

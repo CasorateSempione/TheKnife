@@ -8,7 +8,7 @@ import java.util.*;
 public class SalvataggioUtente {
     private String file = "C:\\Users\\Utente\\Desktop\\TheKnife\\data\\utente.txt";
 
-    private List<Utente> load() {
+  protected  List<Utente> load() {
         List<Utente> lista = new ArrayList<>();
         try {
             if (!Files.exists(Paths.get(file))) return lista;
@@ -26,9 +26,9 @@ public class SalvataggioUtente {
                 Utente u;
 
                 if (ruolo.equals("cliente")) {
-                    u = new Cliente(t[0], t[1], t[2], t[3], t[4], t[5],t[6]);
+                    u = new Cliente(t[0], t[1], t[2], t[3], t[4], t[5], t[6]);
                 } else if (ruolo.equals("ristoratore")) {
-                    u = new Ristoratore(t[0], t[1], t[2], t[3], t[4], t[5], t[6]);
+                    u = new Ristoratore(t[0], t[1], t[2], t[3], t[4], t[5],t[6]);
                 } else {
                     System.out.println("Ruolo sconosciuto: " + ruolo);
                     continue;

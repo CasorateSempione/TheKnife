@@ -1,7 +1,9 @@
 package theknife;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Ristoratore extends Utente {
 
@@ -109,4 +111,45 @@ public class Ristoratore extends Utente {
 
         return true;
     }
+
+
+     public  static Ristoratore registrazioneRistoratore() {
+                    Scanner sc= new Scanner(System.in);
+                   
+                    System.out.println("Inserire nome"); 
+                    String nome= sc.nextLine();
+
+                    System.out.println("Inserire cognome"); 
+                    String cognome=sc.nextLine();
+
+                    System.out.println("Inserire domicilio ");
+                    String domicilio=sc.nextLine();
+                    
+                    System.out.println("Inserire username");
+                    String username=sc.nextLine();
+
+                    System.out.println("Inserire mail");
+                    String mail=sc.nextLine();
+                    
+                    String ruolo="Ristoratore";
+                
+                    
+                    System.out.println("Inserire Password");
+                    String Password=sc.nextLine();
+                    try { 
+                    String hash = PasswordCriptata.hash(Password);
+                    } catch(NoSuchAlgorithmException e) {System.out.println("Errore");
+                }
+            
+                    return new Ristoratore(nome, cognome, domicilio, mail, Password, username,ruolo);
+                    
+                    
+}
+
+
+
+
+
+
+
 }
