@@ -1,11 +1,14 @@
 package theknife;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * La classe <code>Ristoratore</code> rappresenta un utente registrato che gestisce
  * uno o più ristoranti all'interno dell'applicazione TheKnife.
+ *
  * <p>
  * Un ristoratore può aggiungere o rimuovere ristoranti dal proprio elenco,
  * visualizzare le recensioni ricevute e rispondere ai clienti.
@@ -38,22 +41,17 @@ public class Ristoratore extends Utente {
      */
     public Ristoratore(String nome, String cognome, String mail, String username,
                        String password, String domicilio, String ruolo) {
-        super(nome, cognome, mail, username, password, domicilio, ruolo);
+
+        // Ordine corretto per il costruttore di Utente:
+        // (ruolo, nome, cognome, mail, password, domicilio, username)
+        super(ruolo, nome, cognome, mail, password, domicilio, username);
     }
 
     /**
      * Aggiunge un ristorante alla lista dei ristoranti gestiti.
-     * <p>
-     * L'aggiunta fallisce se:
-     * </p>
-     * <ul>
-     *     <li>il ristorante è nullo</li>
-     *     <li>un ristorante con lo stesso nome e città è già presente</li>
-     * </ul>
      *
      * @param r il ristorante da aggiungere
-     * @return <code>true</code> se l'aggiunta è avvenuta con successo,
-     *         <code>false</code> altrimenti
+     * @return <code>true</code> se aggiunto correttamente, <code>false</code> altrimenti
      */
     public boolean aggiungiRistorante(Ristorante r) {
         if (r == null) {
@@ -64,7 +62,9 @@ public class Ristoratore extends Utente {
         for (Ristorante esistente : ristorantigestiti) {
             if (esistente.getNome().equalsIgnoreCase(r.getNome()) &&
                 esistente.getCitta().equalsIgnoreCase(r.getCitta())) {
-                System.out.println("Il ristorante '" + r.getNome() + "' a " + r.getCitta() + " è già presente.");
+
+                System.out.println("Il ristorante '" + r.getNome() +
+                                   "' a " + r.getCitta() + " è già presente.");
                 return false;
             }
         }
@@ -78,8 +78,7 @@ public class Ristoratore extends Utente {
      * Rimuove un ristorante dalla lista dei ristoranti gestiti.
      *
      * @param r il ristorante da rimuovere
-     * @return <code>true</code> se la rimozione è avvenuta con successo,
-     *         <code>false</code> se il ristorante è nullo o non presente nella lista
+     * @return <code>true</code> se rimosso correttamente, <code>false</code> altrimenti
      */
     public boolean rimuoviRistorante(Ristorante r) {
         if (r == null) {
@@ -88,7 +87,8 @@ public class Ristoratore extends Utente {
         }
 
         if (!ristorantigestiti.contains(r)) {
-            System.out.println("Il ristorante '" + r.getNome() + "' non è presente nella lista.");
+            System.out.println("Il ristorante '" + r.getNome() +
+                               "' non è presente nella lista.");
             return false;
         }
 
@@ -99,15 +99,8 @@ public class Ristoratore extends Utente {
 
     /**
      * Restituisce un riepilogo sintetico delle recensioni dei ristoranti gestiti.
-     * <p>
-     * Per ogni ristorante vengono riportati:
-     * </p>
-     * <ul>
-     *     <li>numero totale di recensioni</li>
-     *     <li>media delle stelle</li>
-     * </ul>
      *
-     * @return una stringa contenente il riepilogo delle recensioni
+     * @return una stringa contenente numero di recensioni e media delle stelle
      */
     public String riepilogoRecensioni() {
         StringBuilder sb = new StringBuilder();
@@ -129,7 +122,7 @@ public class Ristoratore extends Utente {
      * Restituisce una descrizione dettagliata delle recensioni di un ristorante.
      *
      * @param r il ristorante di cui visualizzare le recensioni
-     * @return una stringa contenente tutte le recensioni e le eventuali risposte
+     * @return una stringa con tutte le recensioni e le eventuali risposte
      */
     public String visualizzaRecensioniDettaglio(Ristorante r) {
         if (r == null) return "Errore: ristorante nullo.";
@@ -153,20 +146,11 @@ public class Ristoratore extends Utente {
 
     /**
      * Permette al ristoratore di rispondere a una recensione.
-     * <p>
-     * La risposta viene accettata solo se:
-     * </p>
-     * <ul>
-     *     <li>il ristorante e la recensione non sono nulli</li>
-     *     <li>la recensione appartiene al ristorante</li>
-     *     <li>la recensione non ha già una risposta</li>
-     * </ul>
      *
      * @param r il ristorante a cui appartiene la recensione
      * @param recensione la recensione a cui rispondere
      * @param testoRisposta il testo della risposta
-     * @return <code>true</code> se la risposta è stata registrata,
-     *         <code>false</code> altrimenti
+     * @return <code>true</code> se la risposta è stata registrata, <code>false</code> altrimenti
      */
     public boolean rispondiARecensione(Ristorante r, Recensioni recensione, String testoRisposta) {
         if (r == null || recensione == null || testoRisposta == null) return false;
@@ -178,5 +162,43 @@ public class Ristoratore extends Utente {
         recensione.setRisposta(new Risposta("Ristoratore", testoRisposta.trim()));
         return true;
     }
-}
 
+    /**
+     * Metodo statico che gestisce la registrazione di un nuovo ristoratore
+     * tramite input da tastiera.
+     *
+     * @return un nuovo oggetto <code>Ristoratore</code> correttamente inizializzato
+     */
+    public static Ristoratore registrazioneRistoratore() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Inserire nome:");
+        String nome = sc.nextLine();
+
+        System.out.println("Inserire cognome:");
+        String cognome = sc.nextLine();
+
+        System.out.println("Inserire domicilio:");
+        String domicilio = sc.nextLine();
+
+        System.out.println("Inserire username:");
+        String username = sc.nextLine();
+
+        System.out.println("Inserire mail:");
+        String mail = sc.nextLine();
+
+        String ruolo = "Ristoratore";
+
+        System.out.println("Inserire Password:");
+        String password = sc.nextLine();
+
+        try {
+            String hash = PasswordCriptata.hash(password);
+            password = hash;
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("Errore nella cifratura della password.");
+        }
+
+        return new Ristoratore(nome, cognome, mail, username, password, domicilio, ruolo);
+    }
+}

@@ -18,7 +18,6 @@ import java.util.List;
  * e per calcolare la valutazione media del ristorante.
  * </p>
  *
- * @author CADDU
  * @version 1.0
  */
 public class Ristorante {
@@ -62,18 +61,6 @@ public class Ristorante {
     /**
      * Costruisce un nuovo oggetto <code>Ristorante</code> inizializzando
      * tutte le informazioni principali.
-     *
-     * @param Id                  identificativo del ristorante
-     * @param nome                nome del ristorante
-     * @param nazione             nazione in cui si trova
-     * @param citta               città in cui si trova
-     * @param indirizzo           indirizzo completo
-     * @param latitudine          coordinata geografica (latitudine)
-     * @param longitudine         coordinata geografica (longitudine)
-     * @param fasciaPrezzo        fascia di prezzo indicativa
-     * @param delivery            disponibilità del servizio delivery
-     * @param prenotazioneOnline  disponibilità della prenotazione online
-     * @param tipoCucina          tipologia di cucina offerta
      */
     public Ristorante(String Id, String nome, String nazione, String citta, String indirizzo,
                       double latitudine, double longitudine, double fasciaPrezzo,
@@ -92,64 +79,33 @@ public class Ristorante {
         this.tipoCucina = tipoCucina;
     }
 
-    /** @return la nazione del ristorante */
     public String getNazione() { return nazione; }
-
-    /** @return il nome del ristorante */
     public String getNome() { return nome; }
-
-    /** @return l'identificativo del ristorante */
     public String getId() { return Id; }
-
-    /** @return la città del ristorante */
     public String getCitta() { return citta; }
-
-    /** @return l'indirizzo del ristorante */
     public String getIndirizzo() { return indirizzo; }
-
-    /** @return la latitudine della posizione */
     public Double getLatitudine() { return latitudine; }
-
-    /** @return la longitudine della posizione */
     public Double getLongitudine() { return longitudine; }
-
-    /** @return la fascia di prezzo */
     public double getFasciaPrezzo() { return fasciaPrezzo; }
-
-    /** @return true se il ristorante offre delivery */
     public boolean isDelivery() { return delivery; }
-
-    /** @return true se il ristorante permette la prenotazione online */
     public boolean isPrenotazioneOnline() { return prenotazioneOnline; }
-
-    /** @return la tipologia di cucina */
     public String getTipoCucina() { return tipoCucina; }
-
-    /** @return la lista delle recensioni */
     public List<Recensioni> getRecensioni() { return recensioni; }
 
-    /**
-     * Aggiunge una recensione alla lista.
-     *
-     * @param r la recensione da aggiungere
-     */
+    /** Aggiunge una recensione alla lista. */
     public void addRecensione(Recensioni r) {
         this.recensioni.add(r);
     }
 
-    /**
-     * Rimuove una recensione dalla lista.
-     *
-     * @param r la recensione da rimuovere
-     */
+    /** Rimuove una recensione dalla lista. */
     public void removeRecensione(Recensioni r) {
         this.recensioni.remove(r);
     }
 
     /**
-     * Calcola la valutazione media del ristorante sulla base delle recensioni.
+     * Calcola la valutazione media del ristorante.
      *
-     * @return la media delle stelle, oppure 0.0 se non ci sono recensioni
+     * @return media delle stelle oppure 0.0 se non ci sono recensioni
      */
     public double calcolaValutazioneMedia() {
         if (recensioni.isEmpty()) {
@@ -162,5 +118,18 @@ public class Ristorante {
         }
 
         return (double) sommaStelle / recensioni.size();
+    }
+
+    /**
+     * Stampa i dettagli principali del ristorante.
+     */
+    public void stampaDettagli() {
+        System.out.println("Nome: " + getNome());
+        System.out.println("Luogo: " + getNazione() + ", " + getCitta());
+        System.out.println("Fascia di prezzo: " + getFasciaPrezzo());
+        System.out.println("Delivery: " + (isDelivery() ? "Sì" : "No"));
+        System.out.println("Prenotazione online: " + (isPrenotazioneOnline() ? "Sì" : "No"));
+        System.out.println("Tipo cucina: " + getTipoCucina());
+        System.out.println("--------------------------------");
     }
 }

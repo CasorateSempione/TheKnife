@@ -20,7 +20,6 @@ import java.util.List;
  * al ruolo salvato nel file.
  * </p>
  *
- * @author CADDU
  * @version 1.0
  */
 public class SalvataggioUtente {
@@ -30,10 +29,6 @@ public class SalvataggioUtente {
 
     /**
      * Carica tutti gli utenti dal file di testo.
-     * <p>
-     * Ogni riga viene interpretata come un utente. In base al ruolo
-     * (cliente o ristoratore) viene istanziata la classe corrispondente.
-     * </p>
      *
      * @return una lista contenente tutti gli utenti caricati
      */
@@ -61,10 +56,10 @@ public class SalvataggioUtente {
                     u = new Cliente(
                             t[0], // nome
                             t[1], // cognome
-                            t[4], // domicilio
                             t[2], // mail
-                            t[3], // password
                             t[5], // username
+                            t[4], // password
+                            t[3], // domicilio
                             t[6]  // ruolo
                     );
 
@@ -74,8 +69,8 @@ public class SalvataggioUtente {
                             t[1], // cognome
                             t[2], // mail
                             t[5], // username
-                            t[3], // password
-                            t[4], // domicilio
+                            t[4], // password
+                            t[3], // domicilio
                             t[6]  // ruolo
                     );
 
@@ -107,8 +102,8 @@ public class SalvataggioUtente {
                         u.getNome(),
                         u.getcognome(),
                         u.getmail(),
-                        u.getpassword(),
                         u.getdomicilio(),
+                        u.getpassword(),
                         u.getusername(),
                         u.getruolo()
                 ));
@@ -141,6 +136,13 @@ public class SalvataggioUtente {
         lista.removeIf(existing -> existing.getusername().equals(u.getusername()));
         save(lista);
     }
+
+    /**
+     * Restituisce tutti gli utenti salvati.
+     *
+     * @return lista degli utenti
+     */
+    public List<Utente> getTutti() {
+        return load();
+    }
 }
-
-
