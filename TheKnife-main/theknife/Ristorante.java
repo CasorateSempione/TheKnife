@@ -62,4 +62,19 @@ public class Ristorante{
             }
             return (double) sommaStelle / recensioni.size();
         }
-} 
+
+ public void stampaDettagli() {
+        System.out.println("Nome: " + getnome());
+        System.out.println("Luogo: " + getNazione() + ", " + getCitta());
+        System.out.println("Fascia di prezzo: " + getFasciaPrezzo());
+        System.out.println("Delivery: " + (isDelivery() ? "Sì" : "No"));
+        System.out.println("Prenotazione online: " + (isPrenotazioneOnline() ? "Sì" : "No"));
+        System.out.println("Tipo cucina: " + getTipoCucina());
+        System.out.println("--------------------------------");
+    }
+
+
+
+
+}
+        
