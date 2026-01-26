@@ -3,18 +3,50 @@ package theknife;
 import java.io.BufferedWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * La classe <code>SalvataggioUtente</code> gestisce la persistenza dei dati
+ * relativi agli utenti dell'applicazione TheKnife.
+ * <p>
+ * I dati vengono salvati in un file di testo strutturato, dove ogni riga
+ * rappresenta un utente e contiene i campi separati da punto e virgola.
+ * </p>
+ *
+ * <p>
+ * La classe supporta il caricamento, il salvataggio, l'aggiunta e la rimozione
+ * degli utenti, distinguendo automaticamente tra clienti e ristoratori in base
+ * al ruolo salvato nel file.
+ * </p>
+ *
+ * @author CADDU
+ * @version 1.0
+ */
 public class SalvataggioUtente {
+
+    /** Nome del file di salvataggio degli utenti. */
     private String file = "utenti.txt";
 
+    /**
+     * Carica tutti gli utenti dal file di testo.
+     * <p>
+     * Ogni riga viene interpretata come un utente. In base al ruolo
+     * (cliente o ristoratore) viene istanziata la classe corrispondente.
+     * </p>
+     *
+     * @return una lista contenente tutti gli utenti caricati
+     */
     private List<Utente> load() {
         List<Utente> lista = new ArrayList<>();
+
         try {
             if (!Files.exists(Paths.get(file))) return lista;
 
             for (String line : Files.readAllLines(Paths.get(file))) {
+
                 if (line.isBlank()) continue;
+
                 String[] t = line.split(";");
 
                 if (t.length < 7) {
@@ -26,9 +58,27 @@ public class SalvataggioUtente {
                 Utente u;
 
                 if (ruolo.equals("cliente")) {
-                    u = new Cliente(t[0], t[1], t[2], t[3], t[4], t[5],t[6]);
+                    u = new Cliente(
+                            t[0], // nome
+                            t[1], // cognome
+                            t[4], // domicilio
+                            t[2], // mail
+                            t[3], // password
+                            t[5], // username
+                            t[6]  // ruolo
+                    );
+
                 } else if (ruolo.equals("ristoratore")) {
-                    u = new Ristoratore(t[0], t[1], t[2], t[3], t[4], t[5], t[6]);
+                    u = new Ristoratore(
+                            t[0], // nome
+                            t[1], // cognome
+                            t[2], // mail
+                            t[5], // username
+                            t[3], // password
+                            t[4], // domicilio
+                            t[6]  // ruolo
+                    );
+
                 } else {
                     System.out.println("Ruolo sconosciuto: " + ruolo);
                     continue;
@@ -36,14 +86,22 @@ public class SalvataggioUtente {
 
                 lista.add(u);
             }
+
         } catch (Exception e) {
             System.out.println("Errore caricando: " + e.getMessage());
         }
+
         return lista;
     }
 
+    /**
+     * Salva l'intera lista degli utenti nel file.
+     *
+     * @param lista la lista degli utenti da salvare
+     */
     private void save(List<Utente> lista) {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(file))) {
+
             for (Utente u : lista) {
                 writer.write(String.join(";",
                         u.getNome(),
@@ -56,17 +114,28 @@ public class SalvataggioUtente {
                 ));
                 writer.newLine();
             }
+
         } catch (Exception e) {
             System.out.println("Errore salvando: " + e.getMessage());
         }
     }
 
+    /**
+     * Aggiunge un nuovo utente al file.
+     *
+     * @param u l'utente da aggiungere
+     */
     public void aggiungiUtente(Utente u) {
         List<Utente> lista = load();
         lista.add(u);
         save(lista);
     }
 
+    /**
+     * Rimuove un utente dal file confrontando il nome utente.
+     *
+     * @param u l'utente da rimuovere
+     */
     public void rimuoviUtente(Utente u) {
         List<Utente> lista = load();
         lista.removeIf(existing -> existing.getusername().equals(u.getusername()));
