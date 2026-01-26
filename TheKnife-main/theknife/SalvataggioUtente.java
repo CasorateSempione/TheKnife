@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class SalvataggioUtente {
-    private String file = "C:\\Users\\Utente\\Desktop\\TheKnife\\data\\utente.txt";
+    private String file = "C:\\Users\\Danie\\Desktop\\TheKnife\\TheKnife-main\\theknife\\data\\utente0.txt";
 
   protected  List<Utente> load() {
         List<Utente> lista = new ArrayList<>();

@@ -101,12 +101,36 @@ public class TheKnife {
 }
     }
 
-public static void menuCliente(Cliente r) {
+private  static void menuCliente(Cliente r) {
 
 }
-    public static void menuRistoratore(Ristoratore s) {
+    private  static void menuRistoratore(Ristoratore r) {
 
-    }            
+    int scelta;
+
+    do {
+        System.out.println(" BENVENUTO NEL MENU' RISTORATORE");
+        System.out.println("1) Aggiungi ristorante");
+        System.out.println("2) Visualizza i miei ristoranti");
+        System.out.println("3) Visualizza recensioni");
+        System.out.println("4) Rispondi a una recensione");
+        System.out.println("5. Statistiche ristoranti");
+        System.out.println("0. Logout");
+
+        scelta = sc.nextInt();
+        sc.nextLine();
+
+       /*  switch (scelta) {
+            case "1" : aggiungiRistorante(r);
+            case "2" : visualizzaMieiRistoranti(r);
+            case "3" : visualizzaRecensioni(r);
+            case "4" : rispondiRecensione(r);
+            case  "5":  statistiche(r);
+        }
+
+   */ } while (scelta != 0);
+}
+    
 
 
 

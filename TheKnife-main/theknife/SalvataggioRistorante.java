@@ -6,7 +6,7 @@ import java.util.*;
 
 public class SalvataggioRistorante {
 
-    private String file = "C:\\Users\\Utente\\Desktop\\TheKnife\\data\\ristorante.txt";
+    private String file = "C:\\Users\\Danie\\Desktop\\TheKnife\\TheKnife-main\\theknife\\data\\ristorante.txt";
 
     private List<Ristorante> load() {
         List<Ristorante> lista = new ArrayList<>();
