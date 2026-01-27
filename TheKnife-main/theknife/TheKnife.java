@@ -90,10 +90,10 @@ public class TheKnife {
                      if (trovato == null) {
                          System.out.println("Credenziali errate");
                              return;
-                        }else
-                            {
-                                System.out.println("\nBenvenuto " + trovato.getNome() + "!");
-                            }
+                        }
+                            
+                        System.out.println("\nBenvenuto " + trovato.getNome() + "!");
+                            
                             if (trovato instanceof Cliente) {
     menuCliente((Cliente) trovato);
 } else if (trovato instanceof Ristoratore) {
@@ -106,7 +106,7 @@ private  static void menuCliente(Cliente r) {
 }
     private  static void menuRistoratore(Ristoratore r) {
 
-    int scelta;
+    String scelta;
 
     do {
         System.out.println(" BENVENUTO NEL MENU' RISTORATORE");
@@ -117,26 +117,22 @@ private  static void menuCliente(Cliente r) {
         System.out.println("5. Statistiche ristoranti");
         System.out.println("0. Logout");
 
-        scelta = sc.nextInt();
-        sc.nextLine();
+        scelta = sc.nextLine();
 
-       /*  switch (scelta) {
+        switch (scelta) {
             case "1" : aggiungiRistorante(r);
+
             case "2" : visualizzaMieiRistoranti(r);
+
             case "3" : visualizzaRecensioni(r);
             case "4" : rispondiRecensione(r);
-            case  "5":  statistiche(r);
+            case "5":  statisticheRistoranti(r); 
         }
 
-   */ } while (scelta != 0);
+    } while (!scelta.equals("0")); 
 }
     
-
-
-
-
-
-
+    
                     
     private static void usaComeGuest() {
         System.out.println("Stai visualizzando in modalità ospite. ");
@@ -167,8 +163,8 @@ private  static void menuCliente(Cliente r) {
                     System.out.println("Errore: Valore non valido");
                 }
                     break;
-                    //case3:
-
+                    case "3":
+                    menuRicercaGuest(); 
 
                 default:
                     System.out.println("\n Scelta non valida. Riprova."); 
@@ -190,5 +186,222 @@ private  static void menuCliente(Cliente r) {
         r.stampaDettagli();
     }
 }
+   public static void visualizzaDettagliRistoranti(List<Ristorante> lista) {
+    SalvataggioRistorante dao = new SalvataggioRistorante();
+    lista = dao.getTutti();
+
+    if (lista.isEmpty()) {
+        System.out.println("Nessun ristorante disponibile");
+        return;
+    }
+
+    for (Ristorante r : lista) {
+        r.stampaDettagli();
+    }
 }
 
+
+
+
+
+
+private static void menuRicercaGuest() {
+    System.out.println("Ora ti trovi nel menù di ricerca Ristoranti");
+    System.out.println("1) Ricerca per nome");
+    System.out.println("2) Ricerca per città");
+    System.out.println("3) Ricerca per tipo di cucina");
+    System.out.println("4) Ricerca per fascia di prezzo");
+    System.out.print("Scelta: ");
+
+    String scelta = sc.nextLine();
+
+    switch (scelta) {
+
+        case "1":
+            System.out.print("Nome ristorante: ");
+            String nome = sc.nextLine();
+            List<Ristorante> risultati= GestoreRistoranti.cercaPerNome(nome);
+            visualizzaDettagliRistoranti(risultati);
+            break;
+
+        case "2":
+            System.out.print("Città: ");
+            String citta = sc.nextLine();
+            visualizzaDettagliRistoranti(GestoreRistoranti.cercaPerCitta(citta));
+            break;
+
+        case "3":
+            System.out.print("Tipo cucina: ");
+            String tipo = sc.nextLine();
+            visualizzaDettagliRistoranti(GestoreRistoranti.cercaPerTipoCucina(tipo));
+            break;
+
+        case "4":
+            System.out.print("Prezzo massimo: ");
+            try {
+            double prezzo = Double.parseDouble(sc.nextLine());
+            visualizzaDettagliRistoranti(GestoreRistoranti.cercaperFasciaPrezzo(prezzo));
+            } catch (NumberFormatException e ) {
+                System.out.println("Inserisci un numero valido");
+            }
+            break;
+
+        default:
+            System.out.println("Scelta non valida");
+    }
+}
+
+private static void aggiungiRistorante(Ristoratore r) {
+    Ristorante nuovo = Ristorante.creaDaInput(r.getusername()); 
+
+    SalvataggioRistorante dao = new SalvataggioRistorante();
+    dao.aggiungiRistorante(nuovo);
+
+    System.out.println("Ristorante aggiunto correttamente!");
+}
+private static void visualizzaMieiRistoranti(Ristoratore r) {
+    List<Ristorante> tutti = GestoreRistoranti.getRistoranti(); // tutti i ristoranti
+    visualizzaDettagliRistoranti(tutti); // stampa dettagli
+}
+
+
+
+
+
+
+private static void rispondiRecensione(Ristoratore r) {
+
+    SalvataggioRistorante dao = new SalvataggioRistorante();
+    List<Ristorante> tutti = dao.getTutti();
+
+    // filtro solo i ristoranti del ristoratore loggato
+    List<Ristorante> miei = new ArrayList<>();
+    for (Ristorante x : tutti) {
+        if (x.getusernameRistoratore().equals(r.getusername())) {
+            miei.add(x);
+        }
+    }
+
+    if (miei.isEmpty()) {
+        System.out.println("Non hai ancora ristoranti registrati...");
+        return;
+    }
+
+    System.out.println("Scegli il ristorante:");
+    for (int i = 0; i < miei.size(); i++) {
+        System.out.println((i + 1) + ") " + miei.get(i).getnome());
+    }
+    System.out.print("Scelta: ");
+    int idxR = Integer.parseInt(sc.nextLine()) - 1;
+
+    if (idxR < 0 || idxR >= miei.size()) {
+        System.out.println("Scelta non valida.");
+        return;
+    }
+
+    Ristorante scelto = miei.get(idxR);
+
+    if (scelto.getRecensioni().isEmpty()) {
+        System.out.println("Questo ristorante non ha recensioni...");
+        return;
+    }
+
+    System.out.println("Ora scegli la recensione:");
+    for (int j = 0; j < scelto.getRecensioni().size(); j++) {
+        Recensioni rec = scelto.getRecensioni().get(j);
+        System.out.println((j + 1) + ") " + rec.getAutore()
+                + " - " + rec.getNumeroStelle() + "★");
+        System.out.println("   " + rec.getCommento());
+
+        if (rec.getrispostaAutore().equalsIgnoreCase("si")) {
+            System.out.println("   Risposta: " + rec.getRispostaTesto());
+        } else {
+            System.out.println("Non è presente alcuna risposta");
+        }
+    }
+
+    System.out.print("Scelta: ");
+    int idxRec = Integer.parseInt(sc.nextLine()) - 1;
+
+    if (idxRec < 0 || idxRec >= scelto.getRecensioni().size()) {
+        System.out.println("Scelta non valida.");
+        return;
+    }
+
+    Recensioni recScelta = scelto.getRecensioni().get(idxRec);
+
+    if (recScelta.haRisposta()) {
+    System.out.println("Hai già risposto a questa recensione...");
+    return;
+}
+
+System.out.print("Scrivi la risposta: ");
+String testo = sc.nextLine().trim();
+if (testo.isEmpty()) {
+    System.out.println("Risposta non valida, operazione annullata.");
+    return;
+}
+
+recScelta.rispondi(r.getusername(), testo);
+dao.aggiornaRistorante(scelto);
+System.out.println("Risposta salvata correttamente...");
+
+}
+
+private static void visualizzaRecensioni(Ristoratore r) {
+    SalvataggioRistorante dao = new SalvataggioRistorante();
+    List<Ristorante> tutti = dao.getTutti();
+
+    for (Ristorante ris : tutti) {
+        if (ris.getusernameRistoratore().equals(r.getusername())) {
+
+            System.out.println("Ristorante: " + ris.getnome());
+
+            if (ris.getRecensioni().isEmpty()) {
+                System.out.println("  Nessuna recensione.");
+            }
+
+            for (Recensioni rec : ris.getRecensioni()) {
+                System.out.println("- " + rec.getAutore()
+                        + " (" + rec.getNumeroStelle() + "★): "
+                        + rec.getCommento());
+
+                if (rec.haRisposta()) {
+                    System.out.println("  Risposta: " + rec.getRispostaTesto());
+                } else {
+                    System.out.println("  Risposta: (nessuna)");
+                }
+            }
+        }
+    }
+}
+
+
+private static void statisticheRistoranti(Ristoratore r) {
+    SalvataggioRistorante dao = new SalvataggioRistorante();
+    List<Ristorante> tutti = dao.getTutti();
+
+    boolean almenoUno = false;
+
+    System.out.println("Ora potrai vedere le statistiche dei tuoi ristoranti");
+
+    for (Ristorante ris : tutti) {
+        if (ris.getusernameRistoratore().equals(r.getusername())) {
+            almenoUno = true;
+
+            System.out.println("Ristorante: " + ris.getnome());
+            System.out.println("Numero recensioni: " + ris.getNumeroRecensioni());
+            System.out.printf("Valutazione media: % "+  ris.calcolaValutazioneMedia());
+        }
+    }
+
+    if (!almenoUno) {
+        System.out.println("Non hai ancora ristoranti registrati.");
+    }
+}
+
+
+
+
+
+}

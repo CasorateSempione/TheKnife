@@ -1,204 +1,143 @@
 package theknife;
+import java.io.BufferedWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+public class SalvataggioRistorante {
 
-/**
- * La classe <code>Ristoratore</code> rappresenta un utente registrato che gestisce
- * uno o più ristoranti all'interno dell'applicazione TheKnife.
- *
- * <p>
- * Un ristoratore può aggiungere o rimuovere ristoranti dal proprio elenco,
- * visualizzare le recensioni ricevute e rispondere ai clienti.
- * </p>
- *
- * <p>
- * La classe estende <code>Utente</code>, ereditando tutte le informazioni
- * anagrafiche e di autenticazione.
- * </p>
- *
- * @author CADDU
- * @version 1.0
- */
-public class Ristoratore extends Utente {
+    private String file = "C:\\Users\\Danie\\Desktop\\TheKnife\\TheKnife-main\\data\\ristorante.txt";
 
-    /** Lista dei ristoranti gestiti dal ristoratore. */
-    private final List<Ristorante> ristorantigestiti = new ArrayList<>();
-
-    /**
-     * Costruisce un nuovo oggetto <code>Ristoratore</code> inizializzando
-     * i campi ereditati dalla classe <code>Utente</code>.
-     *
-     * @param nome      nome del ristoratore
-     * @param cognome   cognome del ristoratore
-     * @param mail      indirizzo email
-     * @param username  nome utente scelto
-     * @param password  password dell'account
-     * @param domicilio domicilio del ristoratore
-     * @param ruolo     ruolo dell'utente (tipicamente "ristoratore")
-     */
-    public Ristoratore(String nome, String cognome, String mail, String username,
-                       String password, String domicilio, String ruolo) {
-
-        // Ordine corretto per il costruttore di Utente:
-        // (ruolo, nome, cognome, mail, password, domicilio, username)
-        super(ruolo, nome, cognome, mail, password, domicilio, username);
-    }
-
-    /**
-     * Aggiunge un ristorante alla lista dei ristoranti gestiti.
-     *
-     * @param r il ristorante da aggiungere
-     * @return <code>true</code> se aggiunto correttamente, <code>false</code> altrimenti
-     */
-    public boolean aggiungiRistorante(Ristorante r) {
-        if (r == null) {
-            System.out.println("Errore: il ristorante non può essere nullo.");
-            return false;
-        }
-
-        for (Ristorante esistente : ristorantigestiti) {
-            if (esistente.getNome().equalsIgnoreCase(r.getNome()) &&
-                esistente.getCitta().equalsIgnoreCase(r.getCitta())) {
-
-                System.out.println("Il ristorante '" + r.getNome() +
-                                   "' a " + r.getCitta() + " è già presente.");
-                return false;
-            }
-        }
-
-        ristorantigestiti.add(r);
-        System.out.println("Ristorante '" + r.getNome() + "' aggiunto con successo!");
-        return true;
-    }
-
-    /**
-     * Rimuove un ristorante dalla lista dei ristoranti gestiti.
-     *
-     * @param r il ristorante da rimuovere
-     * @return <code>true</code> se rimosso correttamente, <code>false</code> altrimenti
-     */
-    public boolean rimuoviRistorante(Ristorante r) {
-        if (r == null) {
-            System.out.println("Errore: il ristorante non può essere nullo.");
-            return false;
-        }
-
-        if (!ristorantigestiti.contains(r)) {
-            System.out.println("Il ristorante '" + r.getNome() +
-                               "' non è presente nella lista.");
-            return false;
-        }
-
-        ristorantigestiti.remove(r);
-        System.out.println("Ristorante '" + r.getNome() + "' rimosso con successo!");
-        return true;
-    }
-
-    /**
-     * Restituisce un riepilogo sintetico delle recensioni dei ristoranti gestiti.
-     *
-     * @return una stringa contenente numero di recensioni e media delle stelle
-     */
-    public String riepilogoRecensioni() {
-        StringBuilder sb = new StringBuilder();
-
-        for (Ristorante r : ristorantigestiti) {
-            double media = r.calcolaValutazioneMedia();
-            int count = r.getRecensioni().size();
-
-            sb.append(String.format(
-                "Ristorante: %s | Recensioni: %d | Media stelle: %.2f%n",
-                r.getNome(), count, media
-            ));
-        }
-
-        return sb.toString();
-    }
-
-    /**
-     * Restituisce una descrizione dettagliata delle recensioni di un ristorante.
-     *
-     * @param r il ristorante di cui visualizzare le recensioni
-     * @return una stringa con tutte le recensioni e le eventuali risposte
-     */
-    public String visualizzaRecensioniDettaglio(Ristorante r) {
-        if (r == null) return "Errore: ristorante nullo.";
-
-        StringBuilder sb = new StringBuilder("Recensioni per: " + r.getNome() + "\n");
-        int idx = 1;
-
-        for (Recensioni rec : r.getRecensioni()) {
-            String risposta = (rec.getRisposta() == null)
-                    ? "(nessuna risposta)"
-                    : rec.getRisposta().getTesto();
-
-            sb.append(String.format(
-                "%d) Stelle: %d | Testo: %s | Risposta: %s%n",
-                idx++, rec.getNumeroStelle(), rec.getCommento(), risposta
-            ));
-        }
-
-        return sb.toString();
-    }
-
-    /**
-     * Permette al ristoratore di rispondere a una recensione.
-     *
-     * @param r il ristorante a cui appartiene la recensione
-     * @param recensione la recensione a cui rispondere
-     * @param testoRisposta il testo della risposta
-     * @return <code>true</code> se la risposta è stata registrata, <code>false</code> altrimenti
-     */
-    public boolean rispondiARecensione(Ristorante r, Recensioni recensione, String testoRisposta) {
-        if (r == null || recensione == null || testoRisposta == null) return false;
-
-        if (!r.getRecensioni().contains(recensione)) return false;
-
-        if (recensione.getRisposta() != null) return false;
-
-        recensione.setRisposta(new Risposta("Ristoratore", testoRisposta.trim()));
-        return true;
-    }
-
-    /**
-     * Metodo statico che gestisce la registrazione di un nuovo ristoratore
-     * tramite input da tastiera.
-     *
-     * @return un nuovo oggetto <code>Ristoratore</code> correttamente inizializzato
-     */
-    public static Ristoratore registrazioneRistoratore() {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Inserire nome:");
-        String nome = sc.nextLine();
-
-        System.out.println("Inserire cognome:");
-        String cognome = sc.nextLine();
-
-        System.out.println("Inserire domicilio:");
-        String domicilio = sc.nextLine();
-
-        System.out.println("Inserire username:");
-        String username = sc.nextLine();
-
-        System.out.println("Inserire mail:");
-        String mail = sc.nextLine();
-
-        String ruolo = "Ristoratore";
-
-        System.out.println("Inserire Password:");
-        String password = sc.nextLine();
+    private List<Ristorante> load() {
+        List<Ristorante> lista = new ArrayList<>();
+        Ristorante current = null;
 
         try {
-            String hash = PasswordCriptata.hash(password);
-            password = hash;
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println("Errore nella cifratura della password.");
+            if (!Files.exists(Paths.get(file))) return lista;
+
+            for (String line : Files.readAllLines(Paths.get(file))) {
+
+                if (line.isBlank()) continue;
+
+                if (line.equals("[RISTORANTE]")) {
+                    current = null;
+                    continue;
+                }
+                if (line.equals("[RECENSIONE]")) {
+                    continue;
+                }
+
+                if (current == null) {
+                    String[] t = line.split(";");
+                    String usernameRistoratore=(t.length > 11) ? t[11] : "";
+                    current = new Ristorante(
+                            t[0], t[1], t[2], t[3],t[4],
+                            Double.parseDouble(t[5]),
+                            Double.parseDouble(t[6]),
+                            Double.parseDouble(t[7]),
+                            t[8].equals("si"),
+                            t[9].equals("si"),
+                            t[10],
+                            usernameRistoratore
+                    );
+                    lista.add(current);
+
+                } else {
+                    String[] t = line.split(";");
+                    Recensioni rec = new Recensioni(
+                            t[0], t[1], t[2],t[3],
+                            Integer.parseInt(t[4]),
+                            t[5],
+                            t.length > 6 ? t[6] : "",
+                            t.length > 7 ? t[7] : ""
+                    );
+                    current.addRecensione(rec);
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Errore caricando: " + e.getMessage());
         }
 
-        return new Ristoratore(nome, cognome, mail, username, password, domicilio, ruolo);
+        return lista;
+    }
+    private void save(List<Ristorante> lista) {
+
+        try (BufferedWriter bw = Files.newBufferedWriter(Paths.get(file))) {
+
+            for (Ristorante r : lista) {
+                bw.write("[RISTORANTE]\n");
+                bw.write(String.join(";",
+                        r.getId(), 
+                        r.getnome(),
+                        r.getNazione(), 
+                        r.getCitta(),
+                        r.getIndirizzo(),
+                        "" + r.getLatitudine(),
+                        "" + r.getLongitudine(),
+                        "" + r.getFasciaPrezzo(),
+                        r.isDelivery() ? "si" : "no",
+                        r.isPrenotazioneOnline()? "si" : "no",
+                        r.getTipoCucina(),
+                        r.getusernameRistoratore()
+                ) + "\n");
+
+                for (Recensioni rec : r.getRecensioni()) {
+                     bw.write("[RECENSIONE]\n");
+                    bw.write(String.join(";",
+                            rec.getRiristoratore(),
+                             rec.getId(),
+                             rec.getRistoranteid(),
+                            rec.getAutore(),
+                            "" + rec.getNumeroStelle(),
+                            rec.getCommento(),
+                            rec.getrispostaAutore(),
+                            rec.getRispostaTesto()
+                    ) + "\n");
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Errore salvataggio: " + e.getMessage());
+        }
+    }
+    public void aggiungiRistorante(Ristorante r) {
+        List<Ristorante> lista = load();
+        lista.add(r);
+        save(lista);
+    }
+
+public void aggiornaRistorante(Ristorante aggiornato) {
+    List<Ristorante> lista= load();
+    for( int i=0; i< lista.size(); i++) {
+        if(lista.get(i).getId().equals(aggiornato.getId())) {
+            lista.set(i,aggiornato);
+            break;
+        }
+    }
+    save(lista);
+}
+
+
+
+    public void aggiungiRecensione(String idRist, Recensioni rec) {
+        List<Ristorante> lista = load();
+        for (Ristorante r : lista) {
+            if (r.getId().equals(idRist)) {
+                r.addRecensione(rec);
+                break;
+            }
+        }
+        save(lista);
+    }
+
+    public void rimuoviRistorante(String id) {
+        List<Ristorante> lista = load();
+        lista.removeIf(r -> r.getId().equals(id));
+        save(lista);
+    }
+
+    public List<Ristorante> getTutti() {
+        return load();
     }
 }

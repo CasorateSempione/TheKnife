@@ -1,84 +1,60 @@
 package theknife;
 
-/**
- * La classe astratta <code>Utente</code> rappresenta un generico utente
- * dell'applicazione TheKnife. Contiene le informazioni anagrafiche e
- * di autenticazione comuni a tutte le tipologie di utenti
- * (clienti e ristoratori).
- *
- * <p>
- * Le sottoclassi specializzano il comportamento aggiungendo funzionalità
- * specifiche per il ruolo ricoperto.
- * </p>
- *
- * @author CADDU
- * @version 1.0
- */
+import java.util.List;
+
+
 public abstract class Utente {
+  private  List<Utente> utenti;
+private String nome;
+private String cognome;
+private String domicilio;
+private String username;
+private String mail;
+private String password;
+private String ruolo;
+public Utente(String nome, String cognome, String domicilio, String mail, String password, String username, String ruolo) {
+    
+    this.nome=nome;
+    this.cognome=cognome;
+    this.domicilio=domicilio;
+    this.mail=mail;
+    this.password=password;
+    this.username=username;
+    this.ruolo=ruolo;
+}
 
-    /** Nome dell'utente. */
-    private String nome;
+public String getNome(){
+    return nome;
+}
+public String getcognome(){
+    return cognome;
 
-    /** Cognome dell'utente. */
-    private String cognome;
+}
+public String getdomicilio(){
+    return domicilio;
+}  
+public String getmail(){
+    return mail;
+}
+public String getpassword(){
+    return password;
+}
 
-    /** Domicilio dell'utente. */
-    private String domicilio;
+public String getusername(){
+    return username;
+} 
 
-    /** Username scelto dall'utente. */
-    private String username;
-
-    /** Indirizzo email dell'utente. */
-    private String mail;
-
-    /** Password dell'utente. */
-    private String password;
-
-    /** Ruolo dell'utente (cliente o ristoratore). */
-    private String ruolo;
-
-    /**
-     * Costruisce un nuovo oggetto <code>Utente</code> inizializzando
-     * tutte le informazioni principali.
-     *
-     * @param ruolo     ruolo dell'utente
-     * @param nome      nome dell'utente
-     * @param cognome   cognome dell'utente
-     * @param mail      indirizzo email
-     * @param password  password dell'utente
-     * @param domicilio domicilio dell'utente
-     * @param username  username scelto
-     */
-    public Utente(String ruolo, String nome, String cognome, String mail,
-                  String password, String domicilio, String username) {
-
-        this.nome = nome;
-        this.cognome = cognome;
-        this.domicilio = domicilio;
-        this.username = username;
-        this.mail = mail;
-        this.password = password;
-        this.ruolo = ruolo;
-    }
-
-    /** @return il nome dell'utente */
-    public String getNome() { return nome; }
-
-    /** @return il cognome dell'utente */
-    public String getcognome() { return cognome; }
-
-    /** @return il domicilio dell'utente */
-    public String getdomicilio() { return domicilio; }
-
-    /** @return lo username dell'utente */
-    public String getusername() { return username; }
-
-    /** @return l'indirizzo email dell'utente */
-    public String getmail() { return mail; }
-
-    /** @return la password dell'utente */
-    public String getpassword() { return password; }
-
-    /** @return il ruolo dell'utente */
-    public String getruolo() { return ruolo; }
+public String getruolo(){
+    return ruolo;
+}
+public String toFileString() {
+    return getClass().getSimpleName() + ";" +
+    nome + ";" +
+    cognome + ";" +
+    domicilio + ";" +
+    mail + ";" +
+    password + ";" +
+    username + ";" +
+    ruolo;
+}
 }

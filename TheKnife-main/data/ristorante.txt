@@ -1,0 +1,2 @@
+[RISTORANTE]
+b69d15c4-157d-4536-a906-ec3896c0c735;Da Kevin;Italia;Travedona Monate;Via x XX;43.09;23.02;30.0;si;no;Italiana;Dany44
