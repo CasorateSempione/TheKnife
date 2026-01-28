@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Ristorante {
 
     /**
-     * Identificativo univoco del ristorante.
+     * Identificativo del ristorante.
      */
     private String Id;
 
@@ -35,7 +35,7 @@ public class Ristorante {
     private String citta;
 
     /**
-     * Indirizzo completo del ristorante.
+     * Indirizzo del ristorante.
      */
     private String indirizzo;
 
