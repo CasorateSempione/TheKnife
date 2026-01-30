@@ -68,6 +68,8 @@ public class TheKnife {
 
       
                     private static void login() {
+                    SalvataggioUtente su = new SalvataggioUtente();
+                    utenti = su.getTutti();
                     System.out.print("Username: ");
                     String username = sc.nextLine();
                     System.out.print("Password: ");
@@ -101,9 +103,282 @@ public class TheKnife {
 }
     }
 
-private  static void menuCliente(Cliente r) {
+private static void menuCliente(Cliente cliente) {
+    String scelta;
 
+    do {
+        System.out.println("BENVENUTO NEL MENU' CLIENTE");
+        System.out.println("1) Visualizza ristoranti");
+        System.out.println("2) Aggiungi ristorante ai preferiti");
+        System.out.println("3) Rimuovi ristorante dai preferiti");
+        System.out.println("4) Visualizza preferiti");
+        System.out.println("5) Aggiungi recensione");
+        System.out.println("6) Modifica recensione");
+        System.out.println("7) Elimina recensione");
+        System.out.println("0) Logout");
+        System.out.print("Scelta: ");
+
+        scelta = sc.nextLine();
+
+        switch (scelta) {
+            case "1":
+                visualizzaDettagliRistoranti(); 
+                break;
+
+            case "2":
+                aggiungiPreferito(cliente);
+                break;
+
+            case "3":
+                rimuoviPreferito(cliente);
+                break;
+
+            case "4":
+                visualizzaPreferiti(cliente);
+                break;
+
+            case "5":
+                aggiungiRecensione(cliente);
+                break;
+
+            case "6":
+                modificaRecensione(cliente);
+                break;
+
+            case "7":
+                eliminaRecensione(cliente);
+                break;
+
+            case "0":
+                System.out.println("Logout effettuato.");
+                break;
+
+            default:
+                System.out.println("Scelta non valida.");
+        }
+
+    } while (!scelta.equals("0"));
 }
+
+
+private static void aggiungiPreferito(Cliente cliente) {
+    SalvataggioRistorante dao = new SalvataggioRistorante();
+
+    Ristorante rist = selezionaRistoranteDaNome(dao.getTutti());
+    if (rist == null) return;
+
+    for (Ristorante p : cliente.ristorantePreferiti()) {
+        if (p.getId().equals(rist.getId())) {
+            System.out.println("Questo ristorante è già nei preferiti.");
+            return;
+        }
+    }
+
+    cliente.ristorantePreferiti().add(rist);
+    System.out.println("Aggiunto ai preferiti: " + rist.getnome());
+}
+
+private static void rimuoviPreferito(Cliente cliente) {
+    List<Ristorante> pref = cliente.ristorantePreferiti();
+    if (pref.isEmpty()) {
+        System.out.println("Non hai ristoranti salvati come preferiti.");
+        return;
+    }
+
+    System.out.println("I TUOI PREFERITI ");
+    for (int i = 0; i < pref.size(); i++) {
+        System.out.println((i + 1) + ") " + pref.get(i).getnome() + " (" + pref.get(i).getCitta() + ")");
+    }
+    System.out.print("Seleziona numero da rimuovere (0 annulla): ");
+
+    int scelta = leggiIntero();
+    if (scelta <= 0 || scelta > pref.size()) {
+        System.out.println("Operazione annullata.");
+        return;
+    }
+
+    Ristorante rimosso = pref.remove(scelta - 1);
+    System.out.println("Rimosso dai preferiti: " + rimosso.getnome());
+}
+
+private static void visualizzaPreferiti(Cliente cliente) {
+    List<Ristorante> pref = cliente.ristorantePreferiti();
+    if (pref.isEmpty()) {
+        System.out.println("Non hai preferiti.");
+        return;
+    }
+
+    System.out.println("I TUOI PREFERITI");
+    for (Ristorante r : pref) {
+        System.out.println(r);
+        System.out.println("Valutazione media: " + r.calcolaValutazioneMedia());
+    }
+}
+
+private static void aggiungiRecensione(Cliente cliente) {
+    SalvataggioRistorante dao = new SalvataggioRistorante();
+    List<Ristorante> tutti = dao.getTutti();
+
+    Ristorante rist = selezionaRistoranteDaNome(tutti);
+    if (rist == null) return;
+
+    
+    for (Recensioni rec : rist.getRecensioni()) {
+        if (rec.getAutore().equalsIgnoreCase(cliente.getusername())) {
+            System.out.println("Hai già recensito questo ristorante. Usa 'Modifica recensione'.");
+            return;
+        }
+    }
+
+    System.out.print("Numero stelle (1-5): ");
+    int stelle = leggiIntero();
+    if (stelle < 1 || stelle > 5) {
+        System.out.println("Valore stelle non valido.");
+        return;
+    }
+
+    System.out.print("Testo recensione: ");
+    String testo = sc.nextLine();
+
+    String idRec = java.util.UUID.randomUUID().toString();
+
+    Recensioni nuova = new Recensioni(
+            rist.getusernameRistoratore(), // ristostaristoratore
+            idRec,
+            rist.getId(),
+            cliente.getusername(),
+            stelle,
+            testo,
+            "", // rispostaAutore
+            ""  // rispostaTesto
+    );
+
+    rist.addRecensione(nuova);
+    dao.aggiornaRistorante(rist);
+
+    System.out.println("Recensione aggiunta con successo!");
+}
+
+private static void modificaRecensione(Cliente cliente) {
+    SalvataggioRistorante dao = new SalvataggioRistorante();
+    List<Ristorante> tutti = dao.getTutti();
+
+    Ristorante rist = selezionaRistoranteDaNome(tutti);
+    if (rist == null) return;
+
+    Recensioni mia = null;
+    for (Recensioni rec : rist.getRecensioni()) {
+        if (rec.getAutore().equalsIgnoreCase(cliente.getusername())) {
+            mia = rec;
+            break;
+        }
+    }
+
+    if (mia == null) {
+        System.out.println("Non hai ancora inserito una recensione per questo ristorante.");
+        return;
+    }
+
+    System.out.println("LA TUA RECENSIONE ATTUALE ");
+    System.out.println("Stelle: " + mia.getNumeroStelle());
+    System.out.println("Testo: " + mia.getCommento());
+
+    System.out.print("Nuove stelle (1-5): ");
+    int nuoveStelle = leggiIntero();
+    if (nuoveStelle < 1 || nuoveStelle > 5) {
+        System.out.println("Valore stelle non valido.");
+        return;
+    }
+
+    System.out.print("Nuovo testo: ");
+    String nuovoTesto = sc.nextLine();
+
+    mia.numeroStelle(nuoveStelle);
+    mia.commento(nuovoTesto);
+
+    dao.aggiornaRistorante(rist);
+    System.out.println("Recensione modificata con successo!");
+}
+
+private static void eliminaRecensione(Cliente cliente) {
+    SalvataggioRistorante dao = new SalvataggioRistorante();
+    List<Ristorante> tutti = dao.getTutti();
+
+    Ristorante rist = selezionaRistoranteDaNome(tutti);
+    if (rist == null) return;
+
+    Recensioni mia = null;
+    for (Recensioni rec : rist.getRecensioni()) {
+        if (rec.getAutore().equalsIgnoreCase(cliente.getusername())) {
+            mia = rec;
+            break;
+        }
+    }
+
+    if (mia == null) {
+        System.out.println("Non hai recensioni da eliminare per questo ristorante.");
+        return;
+    }
+
+    rist.removeRecensione(mia);
+    dao.aggiornaRistorante(rist);
+
+    System.out.println("Recensione eliminata con successo!");
+}
+
+
+private static Ristorante selezionaRistoranteDaNome(List<Ristorante> lista) {
+    if (lista == null || lista.isEmpty()) {
+        System.out.println("Nessun ristorante disponibile.");
+        return null;
+    }
+
+    System.out.print("Inserisci nome (anche parziale) del ristorante: ");
+    String query = sc.nextLine().toLowerCase();
+
+    List<Ristorante> trovati = new ArrayList<>();
+    for (Ristorante r : lista) {
+        if (r.getnome().toLowerCase().contains(query)) {
+            trovati.add(r);
+        }
+    }
+
+    if (trovati.isEmpty()) {
+        System.out.println("Nessun ristorante trovato.");
+        return null;
+    }
+
+    if (trovati.size() == 1) {
+        return trovati.get(0);
+    }
+
+    System.out.println("\n--- RISULTATI ---");
+    for (int i = 0; i < trovati.size(); i++) {
+        Ristorante r = trovati.get(i);
+        System.out.println((i + 1) + ") " + r.getnome() + " - " + r.getCitta() + " (" + r.getTipoCucina() + ")");
+    }
+
+    System.out.print("Seleziona numero (0 annulla): ");
+    int scelta = leggiIntero();
+    if (scelta <= 0 || scelta > trovati.size()) {
+        System.out.println("Operazione annullata.");
+        return null;
+    }
+
+    return trovati.get(scelta - 1);
+}
+
+private static int leggiIntero() {
+    while (true) {
+        String s = sc.nextLine().trim();
+        try {
+            return Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            System.out.print("Inserisci un numero valido: ");
+        }
+    }
+}
+
     private  static void menuRistoratore(Ristoratore r) {
 
     String scelta;
