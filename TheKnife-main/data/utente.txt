@@ -1,5 +1,0 @@
-Marco;Rossi;Via Roma 12;marco@mail.com;pass123;marco01;cliente
-Daniel;Kroni;Via Settembre XX;daKevin22@gmail.com;DaKevin22;Kevin22;Ristoratore
-Daniele;Esposito;Via Malpaga;dany67@gmail.com;dany88!;Dany67 ;Cliente
-Daniele;Esposito;Via G;dany44@gmail.com;P4QrRj9ScOlmMBsvNO1+hnntIyRkG7murClbyh3JSus=;Dany44;Ristoratore
-Lucrezia;Esposito;Via Malpaga;lulu88@gmail.com;T9DX2rNKW4Q9P5Pbvh840UlZk0R6Ak28BQ21BjCphL0=;Lulu88;Ristoratore

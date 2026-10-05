@@ -28,9 +28,9 @@ public class Ristoratore extends Utente {
      * @param domicilio domicilio del ristoratore
      * @param ruolo ruolo dell’utente (es. "Ristoratore")
      */
-    public Ristoratore(String nome, String cognome, String mail, String username,
-                       String password, String domicilio, String ruolo) {
-        super(ruolo, nome, cognome, mail, password, domicilio, username);
+    public Ristoratore(String nome, String cognome, String domicilio, String mail,
+                       String password, String username, String ruolo) {
+        super(nome,cognome,domicilio,mail,password,username,ruolo);
     }
 
     /**
@@ -203,6 +203,6 @@ public class Ristoratore extends Utente {
             System.out.println("Errore");
         }
 
-        return new Ristoratore(nome, cognome, mail, username, hash, domicilio, ruolo);
+        return new Ristoratore(nome, cognome, domicilio, mail, hash, username, ruolo);
     }
 }

@@ -15,7 +15,7 @@ public class SalvataggioRistorante {
     /**
      * Percorso del file dove vengono salvati i ristoranti.
      */
-    private String file = "C:\\Users\\Danie\\Desktop\\TheKnife\\TheKnife-main\\data\\ristorante.txt";
+    private String file = "TheKnife-main/data/Ristorante.txt";
 
     /**
      * Carica tutti i ristoranti presenti nel file.

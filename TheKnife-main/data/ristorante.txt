@@ -1,2 +1,18 @@
 [RISTORANTE]
-b69d15c4-157d-4536-a906-ec3896c0c735;Da Kevin;Italia;Travedona Monate;Via x XX;43.09;23.02;30.0;si;no;Italiana;Dany44
+FR-452;Le Petit Paris;Francia;Parigi;Rue de Rivoli 88;48.8566;2.3522;32.0;si;no;Cucina francese;marco12
+[RISTORANTE]
+IT-231;La Trattoria del Borgo;Italia;Bologna;Via Indipendenza 45;44.4949;11.3426;28.5;si;si;Cucina italiana;lucia90
+[RECENSIONE]
+lucia90;78265390-70ef-4aaa-96b1-af0022c7bf46;IT-231;dany78;3;Non molto soddisfatto.;;
+[RECENSIONE]
+lucia90;0c5eabf4-3165-43e1-b11a-54981165ff35;IT-231;Dany56;3;ok;;
+[RISTORANTE]
+ES-118;El Sabor Andaluz;Spagna;Siviglia;Calle Sierpes 12;37.3891;-5.9845;25.0;no;si;Cucina spagnola;carlos88
+[RECENSIONE]
+carlos88;d1b0465e-dd8d-4104-98b0-2a444eb98a41;ES-118;dany78;4;Ottimo cibo ed accoglienza.;;
+[RISTORANTE]
+JP-774;Sakura Sushi;Giappone;Tokyo;Shibuya 3-21-5;35.6595;139.7005;40.0;no;si;Cucina giapponese;kenji_k
+[RISTORANTE]
+DE-309;BierHaus Berlin;Germania;Berlino;Alexanderplatz 7;52.5219;13.4132;30.0;si;si;Cucina tedesca;hans56
+[RECENSIONE]
+marco12;6dd9ed2a-c27b-4bc7-9bdb-42a7d6aea5c3;FR-452;dany78;5;Ottimo ristorante;;

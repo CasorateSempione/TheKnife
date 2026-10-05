@@ -15,7 +15,7 @@ public class SalvataggioUtente {
     /**
      * Percorso del file dove vengono salvati gli utenti.
      */
-    private String file = "C:\\Users\\Danie\\Desktop\\TheKnife\\TheKnife-main\\data\\utente2.txt";
+   private String file = "data/utenti.txt";
 
     /**
      * Carica tutti gli utenti presenti nel file.
@@ -34,6 +34,7 @@ public class SalvataggioUtente {
 
                 String[] t = line.split(";");
 
+            
                 if (t.length < 7) {
                     System.out.println("Riga malformata: " + line);
                     continue;
@@ -52,6 +53,8 @@ public class SalvataggioUtente {
                 }
 
                 lista.add(u);
+
+            
             }
         } catch (Exception e) {
             System.out.println("Errore caricando: " + e.getMessage());

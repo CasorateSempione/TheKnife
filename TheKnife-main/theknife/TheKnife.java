@@ -122,7 +122,6 @@ public class TheKnife {
         Utente trovato = null;
 
         for (Utente u : utenti) {
-            System.out.println("Username: " + u.getusername() + ", Password: " + u.getpassword());
             if (u.getusername().equals(username) && u.getpassword().equals(passwordHash)) {
                 trovato = u;
                 break;
