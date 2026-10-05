@@ -93,10 +93,17 @@ public class SalvataggioUtente {
      * @param u utente da aggiungere
      */
     public void aggiungiUtente(Utente u) {
-        List<Utente> lista = load();
-        lista.add(u);
-        save(lista);
-    }
+    System.out.println("DEBUG: aggiunta utente " + u.getusername());
+
+    List<Utente> lista = load();
+
+    System.out.println("DEBUG: utenti già presenti = " + lista.size());
+
+    lista.add(u);
+    save(lista);
+
+    System.out.println("DEBUG: salvataggio completato");
+}
 
     /**
      * Rimuove un utente dal file confrontando lo username.
@@ -117,6 +124,8 @@ public class SalvataggioUtente {
     public List<Utente> getTutti() {
         return load();
     }
+
+    
 }
 
 
