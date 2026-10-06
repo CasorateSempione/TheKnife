@@ -1,131 +1,239 @@
 package theknife;
 
 import java.io.BufferedWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Classe che si occupa di salvare e caricare gli utenti da un file.
- * <p>Gestisce la lettura, la scrittura e la conversione delle righe del file
- * nei rispettivi oggetti Cliente o Ristoratore.
+ * Classe che si occupa di salvare e caricare gli utenti da file.
  */
 public class SalvataggioUtente {
 
     /**
-     * Percorso del file dove vengono salvati gli utenti.
+     * Percorso del file degli utenti.
      */
-   private String file = "data/utenti.txt";
+    private final Path file;
+
+    /**
+     * Costruttore.
+     * Cerca il file utenti nella struttura del progetto.
+     */
+    public SalvataggioUtente() {
+
+        Path percorso1 = Paths.get("data", "utenti.txt");
+        Path percorso2 = Paths.get("TheKnife-main", "data", "utenti.txt");
+
+        if (Files.exists(percorso1)) {
+            file = percorso1;
+        } else if (Files.exists(percorso2)) {
+            file = percorso2;
+        } else {
+            /*
+             * Se il file non esiste ancora, utilizziamo il percorso
+             * della struttura del progetto.
+             */
+            file = percorso2;
+        }
+    }
 
     /**
      * Carica tutti gli utenti presenti nel file.
-     * <p>Ogni riga viene letta, divisa in campi e trasformata
-     * nell’oggetto corretto in base al ruolo.
      *
-     * @return lista di utenti caricati dal file
+     * @return lista degli utenti caricati
      */
     protected List<Utente> load() {
+
         List<Utente> lista = new ArrayList<>();
+
         try {
-            if (!Files.exists(Paths.get(file))) return lista;
 
-            for (String line : Files.readAllLines(Paths.get(file))) {
-                if (line.isBlank()) continue;
+            if (!Files.exists(file)) {
+                return lista;
+            }
 
-                String[] t = line.split(";");
+            List<String> righe = Files.readAllLines(
+                    file,
+                    StandardCharsets.UTF_8
+            );
 
-            
-                if (t.length < 7) {
-                    System.out.println("Riga malformata: " + line);
+            for (String line : righe) {
+
+                if (line == null || line.isBlank()) {
                     continue;
                 }
 
-                String ruolo = t[6].toLowerCase();
+                String[] t = line.split(";");
+
+                if (t.length < 7) {
+                    System.out.println(
+                            "Riga malformata nel file utenti: " + line
+                    );
+                    continue;
+                }
+
+                String ruolo = t[6].trim();
+
                 Utente u;
 
-                if (ruolo.equals("cliente")) {
-                    u = new Cliente(t[0], t[1], t[2], t[3], t[4], t[5], t[6]);
-                } else if (ruolo.equals("ristoratore")) {
-                    u = new Ristoratore(t[0], t[1], t[2], t[3], t[4], t[5], t[6]);
+                if (ruolo.equalsIgnoreCase("Cliente")) {
+
+                    u = new Cliente(
+                            t[0],
+                            t[1],
+                            t[2],
+                            t[3],
+                            t[4],
+                            t[5],
+                            t[6]
+                    );
+
+                } else if (ruolo.equalsIgnoreCase("Ristoratore")) {
+
+                    u = new Ristoratore(
+                            t[0],
+                            t[1],
+                            t[2],
+                            t[3],
+                            t[4],
+                            t[5],
+                            t[6]
+                    );
+
                 } else {
-                    System.out.println("Ruolo sconosciuto: " + ruolo);
+
+                    System.out.println(
+                            "Ruolo sconosciuto: " + ruolo
+                    );
+
                     continue;
                 }
 
                 lista.add(u);
-
-            
             }
+
         } catch (Exception e) {
-            System.out.println("Errore caricando: " + e.getMessage());
+
+            System.out.println(
+                    "Errore durante il caricamento degli utenti: "
+                            + e.getMessage()
+            );
         }
+
         return lista;
     }
 
     /**
-     * Salva su file la lista completa degli utenti.
-     * <p>Ogni utente viene scritto come una riga con i campi separati da “;”.
+     * Salva la lista completa degli utenti nel file.
      *
-     * @param lista lista di utenti da salvare
+     * @param lista lista degli utenti da salvare
      */
     private void save(List<Utente> lista) {
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(file))) {
-            for (Utente u : lista) {
-                writer.write(String.join(";",
-                        u.getNome(),
-                        u.getcognome(),
-                        u.getdomicilio(),
-                        u.getmail(),
-                        u.getpassword(),
-                        u.getusername(),
-                        u.getruolo()
-                ));
-                writer.newLine();
+
+        try {
+
+            /*
+             * Crea la cartella data se non esiste.
+             */
+            if (file.getParent() != null) {
+                Files.createDirectories(file.getParent());
             }
+
+            try (BufferedWriter writer = Files.newBufferedWriter(
+                    file,
+                    StandardCharsets.UTF_8,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING,
+                    StandardOpenOption.WRITE
+            )) {
+
+                for (Utente u : lista) {
+
+                    writer.write(
+                            String.join(
+                                    ";",
+                                    u.getNome(),
+                                    u.getcognome(),
+                                    u.getdomicilio(),
+                                    u.getmail(),
+                                    u.getpassword(),
+                                    u.getusername(),
+                                    u.getruolo()
+                            )
+                    );
+
+                    writer.newLine();
+                }
+            }
+
+            System.out.println(
+                    "Utente salvato nel file: "
+                            + file.toAbsolutePath()
+            );
+
         } catch (Exception e) {
-            System.out.println("Errore salvando: " + e.getMessage());
+
+            System.out.println(
+                    "ERRORE durante il salvataggio degli utenti:"
+            );
+
+            e.printStackTrace();
         }
     }
 
     /**
      * Aggiunge un nuovo utente al file.
      *
-     * @param u utente da aggiungere
+     * @param u utente da salvare
      */
     public void aggiungiUtente(Utente u) {
-    System.out.println("DEBUG: aggiunta utente " + u.getusername());
 
-    List<Utente> lista = load();
+        if (u == null) {
+            System.out.println(
+                    "Errore: impossibile salvare un utente nullo."
+            );
+            return;
+        }
 
-    System.out.println("DEBUG: utenti già presenti = " + lista.size());
-
-    lista.add(u);
-    save(lista);
-
-    System.out.println("DEBUG: salvataggio completato");
-}
-
-    /**
-     * Rimuove un utente dal file confrontando lo username.
-     *
-     * @param u utente da rimuovere
-     */
-    public void rimuoviUtente(Utente u) {
         List<Utente> lista = load();
-        lista.removeIf(existing -> existing.getusername().equals(u.getusername()));
+
+        lista.add(u);
+
         save(lista);
     }
 
     /**
-     * Restituisce tutti gli utenti salvati nel file.
+     * Rimuove un utente dal file tramite username.
      *
-     * @return lista completa degli utenti
+     * @param u utente da rimuovere
+     */
+    public void rimuoviUtente(Utente u) {
+
+        if (u == null) {
+            return;
+        }
+
+        List<Utente> lista = load();
+
+        lista.removeIf(
+                existing ->
+                        existing.getusername()
+                                .equals(u.getusername())
+        );
+
+        save(lista);
+    }
+
+    /**
+     * Restituisce tutti gli utenti presenti nel file.
+     *
+     * @return lista degli utenti
      */
     public List<Utente> getTutti() {
         return load();
     }
-
-    
 }
-
-
