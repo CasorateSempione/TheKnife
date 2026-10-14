@@ -1,6 +1,7 @@
 package theknife;
 
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,24 +22,58 @@ public class SalvataggioUtente {
 
     /**
      * Costruttore.
-     * Cerca il file utenti nella struttura del progetto.
+     * Cerca il file utenti.txt nella struttura del progetto.
      */
     public SalvataggioUtente() {
 
-        Path percorso1 = Paths.get("data", "utenti.txt");
-        Path percorso2 = Paths.get("TheKnife-main", "data", "utenti.txt");
+        Path cartellaCorrente = Paths.get("")
+                .toAbsolutePath()
+                .normalize();
 
-        if (Files.exists(percorso1)) {
-            file = percorso1;
-        } else if (Files.exists(percorso2)) {
-            file = percorso2;
+        Path file1 = cartellaCorrente.resolve(
+                Paths.get(
+                        "TheKnife",
+                        "TheKnife-main",
+                        "data",
+                        "utenti.txt"
+                )
+        );
+
+        Path file2 = cartellaCorrente.resolve(
+                Paths.get(
+                        "TheKnife-main",
+                        "data",
+                        "utenti.txt"
+                )
+        );
+
+        Path file3 = cartellaCorrente.resolve(
+                Paths.get(
+                        "data",
+                        "utenti.txt"
+                )
+        );
+
+        if (Files.isRegularFile(file1)) {
+            file = file1;
+        } else if (Files.isRegularFile(file2)) {
+            file = file2;
+        } else if (Files.isRegularFile(file3)) {
+            file = file3;
         } else {
-            /*
-             * Se il file non esiste ancora, utilizziamo il percorso
-             * della struttura del progetto.
-             */
-            file = percorso2;
+            throw new IllegalStateException(
+                    "File utenti.txt non trovato.\n"
+                            + "Percorsi controllati:\n"
+                            + file1 + "\n"
+                            + file2 + "\n"
+                            + file3
+            );
         }
+
+        System.out.println(
+                "File utenti utilizzato: "
+                        + file.toAbsolutePath()
+        );
     }
 
     /**
@@ -67,7 +102,7 @@ public class SalvataggioUtente {
                     continue;
                 }
 
-                String[] t = line.split(";");
+                String[] t = line.split(";", -1);
 
                 if (t.length < 7) {
                     System.out.println(
@@ -77,7 +112,6 @@ public class SalvataggioUtente {
                 }
 
                 String ruolo = t[6].trim();
-
                 Utente u;
 
                 if (ruolo.equalsIgnoreCase("Cliente")) {
@@ -116,12 +150,14 @@ public class SalvataggioUtente {
                 lista.add(u);
             }
 
-        } catch (Exception e) {
+        } catch (IOException e) {
 
-            System.out.println(
-                    "Errore durante il caricamento degli utenti: "
-                            + e.getMessage()
+            System.err.println(
+                    "Errore durante il caricamento degli utenti da: "
+                            + file.toAbsolutePath()
             );
+
+            e.printStackTrace();
         }
 
         return lista;
@@ -136,11 +172,10 @@ public class SalvataggioUtente {
 
         try {
 
-            /*
-             * Crea la cartella data se non esiste.
-             */
-            if (file.getParent() != null) {
-                Files.createDirectories(file.getParent());
+            Path cartella = file.getParent();
+
+            if (cartella != null) {
+                Files.createDirectories(cartella);
             }
 
             try (BufferedWriter writer = Files.newBufferedWriter(
@@ -171,14 +206,20 @@ public class SalvataggioUtente {
             }
 
             System.out.println(
-                    "Utente salvato nel file: "
+                    "Salvataggio completato. Numero di utenti: "
+                            + lista.size()
+            );
+
+            System.out.println(
+                    "File aggiornato: "
                             + file.toAbsolutePath()
             );
 
-        } catch (Exception e) {
+        } catch (IOException e) {
 
-            System.out.println(
-                    "ERRORE durante il salvataggio degli utenti:"
+            System.err.println(
+                    "Errore durante il salvataggio degli utenti in: "
+                            + file.toAbsolutePath()
             );
 
             e.printStackTrace();
@@ -193,7 +234,7 @@ public class SalvataggioUtente {
     public void aggiungiUtente(Utente u) {
 
         if (u == null) {
-            System.out.println(
+            System.err.println(
                     "Errore: impossibile salvare un utente nullo."
             );
             return;
@@ -220,9 +261,7 @@ public class SalvataggioUtente {
         List<Utente> lista = load();
 
         lista.removeIf(
-                existing ->
-                        existing.getusername()
-                                .equals(u.getusername())
+                existing -> existing.getusername().equals(u.getusername())
         );
 
         save(lista);
